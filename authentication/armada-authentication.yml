@@ -1,0 +1,36 @@
+generated: '2026-07-18'
+method: searched
+source: openapi/armada-orchestrator-openapi-original.yml
+docs: https://docs.armada.ai/bridge/tenant-guide/ai-studio/model-as-a-service/api-key
+summary:
+  types:
+  - http
+  - openIdConnect
+  api_key_in: [header]
+  oauth2_flows: []
+schemes:
+- name: bearerAuth
+  type: http
+  scheme: bearer
+  bearerFormat: JWT
+  description: >-
+    Orchestrator API: JWT Bearer token in the Authorization header, issued by the
+    platform auth middleware.
+  sources:
+  - openapi/armada-orchestrator-openapi-original.yml
+- name: modelServiceApiKey
+  type: http
+  scheme: bearer
+  description: >-
+    Bridge AI Studio Model-as-a-Service: an API key presented as a Bearer token
+    (Authorization: Bearer $API_KEY). Keys are created and revoked in AI Studio
+    Settings and shown once at creation.
+  sources:
+  - https://docs.armada.ai/bridge/tenant-guide/ai-studio/model-as-a-service/api-key
+- name: consoleOIDC
+  type: openIdConnect
+  description: >-
+    Console/UI sign-in (console.armada.ai, Atlas / Armada Edge Platform) is OIDC,
+    backed by Keycloak.
+  sources:
+  - https://console.armada.ai/
