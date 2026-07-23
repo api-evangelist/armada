@@ -1,0 +1,19 @@
+generated: '2026-07-18'
+method: generated
+source: openapi/armada-orchestrator-openapi-original.yml
+note: >-
+  Agent Skills generated from the Bridge Orchestrator OpenAPI. Every step is grounded in a
+  real operationId present in the spec (46 operations declare ids); no operations were invented.
+skills:
+  - file: armada-onboard-tenant.md
+    name: Onboard a tenant on Armada Bridge
+    api: openapi/armada-orchestrator-openapi-original.yml
+    operations: [getTenants, createTenant, getDefaultQuotas, createDefaultQuotas, getMonetizeInfo, getSupportedCountries]
+  - file: armada-discover-and-import-infrastructure.md
+    name: Discover and import edge infrastructure
+    api: openapi/armada-orchestrator-openapi-original.yml
+    operations: [getDiscoveryType, discoverTopology, getDeviceDiscoveryStatus, getTopology, getAllImportInfra, importInfraPost, getAllComputeImportInfra, getAllStorageImportInfra]
+  - file: armada-inspect-capacity-and-catalog.md
+    name: Inspect platform capacity and catalog
+    api: openapi/armada-orchestrator-openapi-original.yml
+    operations: [getDashboardStats, getTotalCapacity, getCatalog, getMetalFlavours, getVMFlavours, getVGPUFlavours, getOsImages, getClusterVersions, getCapabilities]

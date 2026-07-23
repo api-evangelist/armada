@@ -1,0 +1,22 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Armada Bridge Orchestrator API
+  version: 1.0.0
+extends: openapi/armada-orchestrator-openapi-original.yml
+# Captures API Evangelist enrichment metadata as an overlay so the harvested
+# original spec is never mutated. Actions target the info object and note the
+# platform's auth + deployment model surfaced during enrichment.
+actions:
+  - target: $.info
+    update:
+      x-apievangelist-provider: armada
+      x-apievangelist-product: bridge
+      x-apievangelist-category: gpu-cloud-management
+      x-apievangelist-auth: bearer-jwt
+      x-apievangelist-deployment: per-tenant-relative-base-url
+      x-apievangelist-notes: >-
+        189 operations across 33 tags; 46 declare operationIds. servers[] is
+        relative ("/") and must be prefixed with the deployment base URL.
+  - target: $.info.contact
+    update:
+      url: https://docs.armada.ai/bridge/api

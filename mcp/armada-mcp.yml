@@ -1,0 +1,149 @@
+generated: '2026-07-18'
+method: derived
+source: openapi/armada-orchestrator-openapi-original.yml
+status: candidate
+server:
+  name: armada-bridge-orchestrator
+  transport: http
+note: Candidate MCP tool surface derived from the named operations of the Bridge Orchestrator OpenAPI.
+  No official hosted Armada MCP server was found. Only operations that declare an operationId are listed
+  (46 of 189).
+tools:
+- name: getHealthCheck
+  description: Health check
+  source_operation: openapi/armada-orchestrator-openapi-original.yml#getHealthCheck
+- name: getLogLevel
+  description: Get current log level
+  source_operation: openapi/armada-orchestrator-openapi-original.yml#getLogLevel
+- name: setLogLevel
+  description: Set log level
+  source_operation: openapi/armada-orchestrator-openapi-original.yml#setLogLevel
+- name: enableDebug
+  description: Enable debug logging
+  source_operation: openapi/armada-orchestrator-openapi-original.yml#enableDebug
+- name: disableDebug
+  description: Disable debug (set to info)
+  source_operation: openapi/armada-orchestrator-openapi-original.yml#disableDebug
+- name: fetchAllStorageNodesCommon
+  description: List storage nodes (common/tenant context)
+  source_operation: openapi/armada-orchestrator-openapi-original.yml#fetchAllStorageNodesCommon
+- name: getTopology
+  description: Get topology
+  source_operation: openapi/armada-orchestrator-openapi-original.yml#getTopology
+- name: discoverTopology
+  description: Discover topology
+  source_operation: openapi/armada-orchestrator-openapi-original.yml#discoverTopology
+- name: getDeviceDiscoveryStatus
+  description: Get device discovery status
+  source_operation: openapi/armada-orchestrator-openapi-original.yml#getDeviceDiscoveryStatus
+- name: getDiscoveryStatus
+  description: Get discovery status
+  source_operation: openapi/armada-orchestrator-openapi-original.yml#getDiscoveryStatus
+- name: getAllImportInfra
+  description: Get all import infra
+  source_operation: openapi/armada-orchestrator-openapi-original.yml#getAllImportInfra
+- name: importInfraPost
+  description: Import infra (upload)
+  source_operation: openapi/armada-orchestrator-openapi-original.yml#importInfraPost
+- name: importInfraPut
+  description: Import infra (upload)
+  source_operation: openapi/armada-orchestrator-openapi-original.yml#importInfraPut
+- name: deleteImportInfraUpload
+  description: Delete import upload
+  source_operation: openapi/armada-orchestrator-openapi-original.yml#deleteImportInfraUpload
+- name: getAllComputeImportInfra
+  description: Get all compute import infra
+  source_operation: openapi/armada-orchestrator-openapi-original.yml#getAllComputeImportInfra
+- name: getAllStorageImportInfra
+  description: Get all storage import infra
+  source_operation: openapi/armada-orchestrator-openapi-original.yml#getAllStorageImportInfra
+- name: getDiscoveryType
+  description: Get discovery type
+  source_operation: openapi/armada-orchestrator-openapi-original.yml#getDiscoveryType
+- name: getMonetizeInfo
+  description: Get monetize info
+  source_operation: openapi/armada-orchestrator-openapi-original.yml#getMonetizeInfo
+- name: getSupportedCountries
+  description: Get supported countries
+  source_operation: openapi/armada-orchestrator-openapi-original.yml#getSupportedCountries
+- name: getNetQServers
+  description: List NetQ servers
+  source_operation: openapi/armada-orchestrator-openapi-original.yml#getNetQServers
+- name: onboardNetQServer
+  description: Onboard NetQ server
+  source_operation: openapi/armada-orchestrator-openapi-original.yml#onboardNetQServer
+- name: createTopologyValidation
+  description: Create topology validation
+  source_operation: openapi/armada-orchestrator-openapi-original.yml#createTopologyValidation
+- name: getTenants
+  description: List tenants
+  source_operation: openapi/armada-orchestrator-openapi-original.yml#getTenants
+- name: createTenant
+  description: Create tenant
+  source_operation: openapi/armada-orchestrator-openapi-original.yml#createTenant
+- name: getCatalog
+  description: Get catalog
+  source_operation: openapi/armada-orchestrator-openapi-original.yml#getCatalog
+- name: getMetalFlavours
+  description: Get metal flavours
+  source_operation: openapi/armada-orchestrator-openapi-original.yml#getMetalFlavours
+- name: fetchAllStorageNodes
+  description: List all storage nodes
+  source_operation: openapi/armada-orchestrator-openapi-original.yml#fetchAllStorageNodes
+- name: getOsImages
+  description: Get OS images
+  source_operation: openapi/armada-orchestrator-openapi-original.yml#getOsImages
+- name: getVMInfo
+  description: Get VM info
+  source_operation: openapi/armada-orchestrator-openapi-original.yml#getVMInfo
+- name: getVMFlavours
+  description: Get VM flavours
+  source_operation: openapi/armada-orchestrator-openapi-original.yml#getVMFlavours
+- name: getVMOSImages
+  description: Get OS images for VMs
+  source_operation: openapi/armada-orchestrator-openapi-original.yml#getVMOSImages
+- name: getVGPUFlavours
+  description: Get vGPU flavours
+  source_operation: openapi/armada-orchestrator-openapi-original.yml#getVGPUFlavours
+- name: getUnderlay
+  description: Get underlay
+  source_operation: openapi/armada-orchestrator-openapi-original.yml#getUnderlay
+- name: createUnderlay
+  description: Create underlay
+  source_operation: openapi/armada-orchestrator-openapi-original.yml#createUnderlay
+- name: getAllVrfNetworkStatus
+  description: Get all VRF network status
+  source_operation: openapi/armada-orchestrator-openapi-original.yml#getAllVrfNetworkStatus
+- name: getNetworkConfig
+  description: Get network config (topologies)
+  source_operation: openapi/armada-orchestrator-openapi-original.yml#getNetworkConfig
+- name: getDashboardStats
+  description: Get dashboard stats
+  source_operation: openapi/armada-orchestrator-openapi-original.yml#getDashboardStats
+- name: getClusterVersions
+  description: Get cluster versions
+  source_operation: openapi/armada-orchestrator-openapi-original.yml#getClusterVersions
+- name: getCapabilities
+  description: Get capabilities/features
+  source_operation: openapi/armada-orchestrator-openapi-original.yml#getCapabilities
+- name: getAllServers
+  description: List all servers
+  source_operation: openapi/armada-orchestrator-openapi-original.yml#getAllServers
+- name: getSettings
+  description: Get admin settings
+  source_operation: openapi/armada-orchestrator-openapi-original.yml#getSettings
+- name: updateSettings
+  description: Update admin settings
+  source_operation: openapi/armada-orchestrator-openapi-original.yml#updateSettings
+- name: getTotalCapacity
+  description: Get total capacity
+  source_operation: openapi/armada-orchestrator-openapi-original.yml#getTotalCapacity
+- name: getDefaultQuotas
+  description: Get default quotas
+  source_operation: openapi/armada-orchestrator-openapi-original.yml#getDefaultQuotas
+- name: createDefaultQuotas
+  description: Create default quotas
+  source_operation: openapi/armada-orchestrator-openapi-original.yml#createDefaultQuotas
+- name: updateDefaultQuotas
+  description: Update default quotas
+  source_operation: openapi/armada-orchestrator-openapi-original.yml#updateDefaultQuotas

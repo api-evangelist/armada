@@ -1,0 +1,41 @@
+generated: '2026-07-18'
+method: searched
+source: https://docs.armada.ai/bridge/api
+docs: https://docs.armada.ai/bridge/tenant-guide/ai-studio/model-as-a-service/api-key
+# Cross-cutting request/response semantics for the Armada Bridge platform,
+# derived from the Orchestrator OpenAPI and the published tenant/admin docs.
+# Cross-links: authentication/, errors/, lifecycle/.
+authentication:
+  style: bearer-token
+  detail: >-
+    Orchestrator API requires a Bearer JWT (Authorization: Bearer <token>) issued by the
+    platform auth middleware. The Model-as-a-Service inference API uses an API key presented
+    as a Bearer token (Authorization: Bearer $API_KEY), generated and revoked in AI Studio
+    Settings and displayed once at creation. Console/UI sign-in is OIDC via Keycloak.
+  ref: authentication/armada-authentication.yml
+error_envelope:
+  format: http-status
+  media_type: application/json
+  note: Standard HTTP status codes (400/401/403/404/409/500) with a human-readable description.
+  ref: errors/armada-problem-types.yml
+versioning:
+  scheme: path-relative
+  api_version: '1.0.0'
+  detail: >-
+    Orchestrator API is v1; servers[] is declared relative ("/") and must be prefixed with
+    the deployment base URL, since Bridge is deployed per tenant/edge site rather than as a
+    single shared public host. Documentation is independently versioned (current line 5.3.0).
+  ref: lifecycle/armada-lifecycle.yml
+idempotency:
+  supported: false
+  note: No Idempotency-Key header or parameter is declared in the OpenAPI or documented.
+pagination:
+  documented: false
+  note: No cursor/offset pagination scheme is declared in the OpenAPI or documented.
+rate_limiting:
+  documented: false
+compatibility:
+  model_inference: >-
+    The Bridge AI Studio Model-as-a-Service endpoints are OpenAI-compatible
+    (POST /v1/chat/completions with model/messages/temperature/max_tokens),
+    served from a per-deployment host shown on the Playground page.

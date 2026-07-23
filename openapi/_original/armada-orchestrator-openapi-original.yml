@@ -1,0 +1,5158 @@
+openapi: 3.0.3
+info:
+  title: Orchestrator API
+  description: |
+    API for the GPUaaS Orchestrator microservice. Handles tenants, clusters, VMs,
+    storage, networking, catalogs, quotas, and related infrastructure operations.
+  version: 1.0.0
+  contact:
+    name: GPUaaS Platform
+
+servers:
+  - url: /
+    description: Relative base (prefix with deployment base URL)
+
+tags:
+  - name: Health & Debug
+  - name: Log Level
+  - name: Tenants
+  - name: Tenant Common Storage
+  - name: Device Discovery
+  - name: Infra Import
+  - name: Monetize
+  - name: NetQ
+  - name: Models
+  - name: Storage
+  - name: Catalog
+  - name: App Catalog
+  - name: Metal
+  - name: VMs
+  - name: Network
+  - name: Dashboard
+  - name: CMS
+  - name: Clusters
+  - name: PaaS
+  - name: Endpoints
+  - name: Features
+  - name: Servers
+  - name: S3
+  - name: Admin Settings
+  - name: VPC
+  - name: Security Groups
+  - name: Templates
+  - name: Quotas
+  - name: Slurm
+  - name: Load Balancers
+  - name: Storage Classes
+  - name: Datasets
+  - name: Data Volumes
+
+paths:
+  /health-check:
+    get:
+      tags: [Health & Debug]
+      summary: Health check
+      operationId: getHealthCheck
+      responses:
+        "200":
+          description: OK
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+  /debug/pprof/{profile}:
+    get:
+      tags: [Health & Debug]
+      summary: pprof debug profiles
+      parameters:
+        - name: profile
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Profile data
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+  /log-level:
+    get:
+      tags: [Log Level]
+      summary: Get current log level
+      operationId: getLogLevel
+      responses:
+        "200":
+          description: Current log level
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+    post:
+      tags: [Log Level]
+      summary: Set log level
+      operationId: setLogLevel
+      responses:
+        "200":
+          description: Log level updated
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+        "201":
+          $ref: '#/components/responses/Created'
+        "409":
+          $ref: '#/components/responses/Conflict'
+
+  /log-level/debug:
+    post:
+      tags: [Log Level]
+      summary: Enable debug logging
+      operationId: enableDebug
+      responses:
+        "200":
+          description: Debug enabled
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+        "201":
+          $ref: '#/components/responses/Created'
+        "409":
+          $ref: '#/components/responses/Conflict'
+
+  /log-level/info:
+    post:
+      tags: [Log Level]
+      summary: Disable debug (set to info)
+      operationId: disableDebug
+      responses:
+        "200":
+          description: Debug disabled
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+        "201":
+          $ref: '#/components/responses/Created'
+        "409":
+          $ref: '#/components/responses/Conflict'
+
+  /tenants/common/storages:
+    get:
+      tags: [Tenant Common Storage]
+      summary: List storage nodes (common/tenant context)
+      operationId: fetchAllStorageNodesCommon
+      responses:
+        "200":
+          description: List of storage nodes
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+  /tenants/common/storages/{storageNodeId}:
+    get:
+      tags: [Tenant Common Storage]
+      summary: Get storage node by ID
+      parameters:
+        - name: storageNodeId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Storage node
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+  /device-discovery:
+    get:
+      tags: [Device Discovery]
+      summary: Get topology
+      operationId: getTopology
+      responses:
+        "200":
+          description: Topology
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+    post:
+      tags: [Device Discovery]
+      summary: Discover topology
+      operationId: discoverTopology
+      responses:
+        "200":
+          description: Discovery started/result
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+        "201":
+          $ref: '#/components/responses/Created'
+        "409":
+          $ref: '#/components/responses/Conflict'
+
+  /device-discovery-status:
+    get:
+      tags: [Device Discovery]
+      summary: Get device discovery status
+      operationId: getDeviceDiscoveryStatus
+      responses:
+        "200":
+          description: Status
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+  /discovery-status:
+    get:
+      tags: [Device Discovery]
+      summary: Get discovery status
+      operationId: getDiscoveryStatus
+      responses:
+        "200":
+          description: Status
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+  /infra/import:
+    get:
+      tags: [Infra Import]
+      summary: Get all import infra
+      operationId: getAllImportInfra
+      responses:
+        "200":
+          description: List of import infra
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+  /infra/import/upload:
+    post:
+      tags: [Infra Import]
+      summary: Import infra (upload)
+      operationId: importInfraPost
+      responses:
+        "200":
+          description: Import result
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+        "201":
+          $ref: '#/components/responses/Created'
+        "409":
+          $ref: '#/components/responses/Conflict'
+    put:
+      tags: [Infra Import]
+      summary: Import infra (upload)
+      operationId: importInfraPut
+      responses:
+        "200":
+          description: Import result
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+    delete:
+      tags: [Infra Import]
+      summary: Delete import upload
+      operationId: deleteImportInfraUpload
+      responses:
+        "200":
+          description: Deleted
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+        "204":
+          $ref: '#/components/responses/NoContent'
+
+  /infra/import/compute:
+    get:
+      tags: [Infra Import]
+      summary: Get all compute import infra
+      operationId: getAllComputeImportInfra
+      responses:
+        "200":
+          description: List of compute import infra
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+  /infra/import/compute/{id}:
+    delete:
+      tags: [Infra Import]
+      summary: Delete import compute
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Deleted
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+        "204":
+          $ref: '#/components/responses/NoContent'
+
+  /infra/import/storage:
+    get:
+      tags: [Infra Import]
+      summary: Get all storage import infra
+      operationId: getAllStorageImportInfra
+      responses:
+        "200":
+          description: List of storage import infra
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+  /infra/import/storage/{id}:
+    delete:
+      tags: [Infra Import]
+      summary: Delete import storage
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Deleted
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+        "204":
+          $ref: '#/components/responses/NoContent'
+
+  /discoverytype:
+    get:
+      tags: [Infra Import]
+      summary: Get discovery type
+      operationId: getDiscoveryType
+      responses:
+        "200":
+          description: Discovery type
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+  /monetize:
+    post:
+      tags: [Monetize]
+      summary: Get monetize info
+      operationId: getMonetizeInfo
+      responses:
+        "200":
+          description: Monetize info
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+        "201":
+          $ref: '#/components/responses/Created'
+        "409":
+          $ref: '#/components/responses/Conflict'
+
+  /monetize/tenants/{tenantId}/users:
+    post:
+      tags: [Monetize]
+      summary: Create monetize account user
+      parameters:
+        - name: tenantId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: User created
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+        "201":
+          $ref: '#/components/responses/Created'
+        "409":
+          $ref: '#/components/responses/Conflict'
+    delete:
+      tags: [Monetize]
+      summary: Delete monetize account user
+      parameters:
+        - name: tenantId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Deleted
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+        "204":
+          $ref: '#/components/responses/NoContent'
+
+  /monetize/countries:
+    get:
+      tags: [Monetize]
+      summary: Get supported countries
+      operationId: getSupportedCountries
+      responses:
+        "200":
+          description: List of countries
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+  /netq/servers:
+    get:
+      tags: [NetQ]
+      summary: List NetQ servers
+      operationId: getNetQServers
+      responses:
+        "200":
+          description: List of NetQ servers
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+    post:
+      tags: [NetQ]
+      summary: Onboard NetQ server
+      operationId: onboardNetQServer
+      responses:
+        "200":
+          description: Server onboarded
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+        "201":
+          $ref: '#/components/responses/Created'
+        "409":
+          $ref: '#/components/responses/Conflict'
+
+  /netq/servers/{id}:
+    get:
+      tags: [NetQ]
+      summary: Get NetQ server by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: NetQ server
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+    delete:
+      tags: [NetQ]
+      summary: Remove NetQ server
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Removed
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+        "204":
+          $ref: '#/components/responses/NoContent'
+
+  /netq/servers/{id}/notifications/subscribe:
+    post:
+      tags: [NetQ]
+      summary: Subscribe to NetQ notifications
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Subscribed
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+        "201":
+          $ref: '#/components/responses/Created'
+        "409":
+          $ref: '#/components/responses/Conflict'
+
+  /netq/servers/{id}/notifications/unsubscribe:
+    post:
+      tags: [NetQ]
+      summary: Unsubscribe from NetQ notifications
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Unsubscribed
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+        "201":
+          $ref: '#/components/responses/Created'
+        "409":
+          $ref: '#/components/responses/Conflict'
+
+  /netq/validate:
+    post:
+      tags: [NetQ]
+      summary: Create topology validation
+      operationId: createTopologyValidation
+      responses:
+        "200":
+          description: Validation job created
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+        "201":
+          $ref: '#/components/responses/Created'
+        "409":
+          $ref: '#/components/responses/Conflict'
+
+  /netq/validate/{jobid}:
+    get:
+      tags: [NetQ]
+      summary: Get topology validation status
+      parameters:
+        - name: jobid
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Validation status
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+  /tenants:
+    get:
+      tags: [Tenants]
+      summary: List tenants
+      operationId: getTenants
+      responses:
+        "200":
+          description: List of tenants
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+    post:
+      tags: [Tenants]
+      summary: Create tenant
+      operationId: createTenant
+      responses:
+        "200":
+          description: Tenant created
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+        "201":
+          $ref: '#/components/responses/Created'
+        "409":
+          $ref: '#/components/responses/Conflict'
+
+  /tenants/{tenant}:
+    get:
+      tags: [Tenants]
+      summary: Get tenant
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Tenant
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+    delete:
+      tags: [Tenants]
+      summary: Delete tenant
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Deleted
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+        "204":
+          $ref: '#/components/responses/NoContent'
+
+  /tenants/{tenant}/models:
+    get:
+      tags: [Models]
+      summary: Get models
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: List of models
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+  /tenants/{tenant}/model-deployments:
+    get:
+      tags: [Models]
+      summary: List model deployments
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: List of model deployments
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+    post:
+      tags: [Models]
+      summary: Create model deployment
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Model deployment created
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+        "201":
+          $ref: '#/components/responses/Created'
+        "409":
+          $ref: '#/components/responses/Conflict'
+
+  /tenants/{tenant}/model-deployments/{id}:
+    get:
+      tags: [Models]
+      summary: Get model deployment
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Model deployment
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+    delete:
+      tags: [Models]
+      summary: Delete model deployment
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Deleted
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+        "204":
+          $ref: '#/components/responses/NoContent'
+
+  /tenants/{tenant}/storage:
+    get:
+      tags: [Storage]
+      summary: Get all storages by tenant
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: List of storages
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+    post:
+      tags: [Storage]
+      summary: Create storage
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Storage created
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+        "201":
+          $ref: '#/components/responses/Created'
+        "409":
+          $ref: '#/components/responses/Conflict'
+
+  /tenants/{tenant}/storage/{computeNodeName}:
+    get:
+      tags: [Storage]
+      summary: Get storage by compute node name
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: computeNodeName
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Storage
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+    delete:
+      tags: [Storage]
+      summary: Delete storage
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: computeNodeName
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Deleted
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+        "204":
+          $ref: '#/components/responses/NoContent'
+
+  /tenants/{tenant}/storage/volumes:
+    get:
+      tags: [Storage]
+      summary: Get volumes by tenant
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: List of volumes
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+    post:
+      tags: [Storage]
+      summary: Create volume
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Volume created
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+        "201":
+          $ref: '#/components/responses/Created'
+        "409":
+          $ref: '#/components/responses/Conflict'
+
+  /tenants/{tenant}/storage/volumes/{id}:
+    get:
+      tags: [Storage]
+      summary: Get volume by ID
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Volume
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+    delete:
+      tags: [Storage]
+      summary: Delete volume
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Deleted
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+        "204":
+          $ref: '#/components/responses/NoContent'
+
+  /tenants/{tenant}/storage/volume-mounts:
+    get:
+      tags: [Storage]
+      summary: Get volume mounts by tenant
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: List of volume mounts
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+    post:
+      tags: [Storage]
+      summary: Create volume mount
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Mount created
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+        "201":
+          $ref: '#/components/responses/Created'
+        "409":
+          $ref: '#/components/responses/Conflict'
+
+  /tenants/{tenant}/storage/volume-mounts/{id}:
+    get:
+      tags: [Storage]
+      summary: Get volume mount by ID
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Volume mount
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+    delete:
+      tags: [Storage]
+      summary: Delete volume mount
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Deleted
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+        "204":
+          $ref: '#/components/responses/NoContent'
+
+  /catalog:
+    get:
+      tags: [Catalog]
+      summary: Get catalog
+      operationId: getCatalog
+      responses:
+        "200":
+          description: Catalog
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+  /catalog/{catalogID}:
+    get:
+      tags: [Catalog]
+      summary: Get catalog by ID
+      parameters:
+        - name: catalogID
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Catalog
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+  /catalog/{catalogID}/product-types/{productTypeID}/pricing:
+    post:
+      tags: [Catalog]
+      summary: Update product type pricing
+      parameters:
+        - name: catalogID
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: productTypeID
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Pricing updated
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+        "201":
+          $ref: '#/components/responses/Created'
+        "409":
+          $ref: '#/components/responses/Conflict'
+
+  /tenants/{tenant}/catalog:
+    get:
+      tags: [Catalog]
+      summary: Get tenant catalog
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Tenant catalog
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+  /tenants/{tenant}/product-types/{productTypeID}:
+    delete:
+      tags: [Catalog]
+      summary: Delete catalog tenant price
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: productTypeID
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Deleted
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+        "204":
+          $ref: '#/components/responses/NoContent'
+
+  /tenants/{tenant}/apps:
+    get:
+      tags: [App Catalog]
+      summary: Get all apps
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: List of apps
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+  /tenants/{tenant}/apps/{name}:
+    get:
+      tags: [App Catalog]
+      summary: Get app by name
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: name
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: App
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+  /tenants/{tenant}/metal/allocate:
+    post:
+      tags: [Metal]
+      summary: Allocate metal
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Metal allocated
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+        "201":
+          $ref: '#/components/responses/Created'
+        "409":
+          $ref: '#/components/responses/Conflict'
+
+  /tenants/{tenant}/metal/{computeNodeId}/deallocate:
+    post:
+      tags: [Metal]
+      summary: Deallocate metal
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: computeNodeId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Deallocated
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+        "201":
+          $ref: '#/components/responses/Created'
+        "409":
+          $ref: '#/components/responses/Conflict'
+
+  /tenants/{tenant}/metal/computes:
+    get:
+      tags: [Metal]
+      summary: List computes
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: List of computes
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+  /tenants/{tenant}/metal/computes/{computeNodeId}:
+    get:
+      tags: [Metal]
+      summary: Get compute by ID
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: computeNodeId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Compute
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+  /metal/flavour:
+    get:
+      tags: [Metal]
+      summary: Get metal flavours
+      operationId: getMetalFlavours
+      responses:
+        "200":
+          description: List of flavours
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+  /storages:
+    get:
+      tags: [Metal]
+      summary: List all storage nodes
+      operationId: fetchAllStorageNodes
+      responses:
+        "200":
+          description: List of storage nodes
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+  /storages/{storageNodeId}:
+    get:
+      tags: [Metal]
+      summary: Get storage node by ID
+      parameters:
+        - name: storageNodeId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Storage node
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+  /osimages:
+    get:
+      tags: [Metal]
+      summary: Get OS images
+      operationId: getOsImages
+      responses:
+        "200":
+          description: List of OS images
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+  /tenants/{tenant}/vms:
+    get:
+      tags: [VMs]
+      summary: Get all VMs for tenant
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: List of VMs
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+    post:
+      tags: [VMs]
+      summary: Allocate VM
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: VM allocated
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+        "201":
+          $ref: '#/components/responses/Created'
+        "409":
+          $ref: '#/components/responses/Conflict'
+
+  /tenants/{tenant}/vms/{vmId}:
+    get:
+      tags: [VMs]
+      summary: Get VM
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: vmId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: VM
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+    delete:
+      tags: [VMs]
+      summary: Deallocate VM
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: vmId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Deallocated
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+        "204":
+          $ref: '#/components/responses/NoContent'
+
+  /vms:
+    get:
+      tags: [VMs]
+      summary: Get VM info
+      operationId: getVMInfo
+      responses:
+        "200":
+          description: VM info
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+  /vms/flavour:
+    get:
+      tags: [VMs]
+      summary: Get VM flavours
+      operationId: getVMFlavours
+      responses:
+        "200":
+          description: List of flavours
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+  /tenants/{tenant}/vms/flavours:
+    get:
+      tags: [VMs]
+      summary: Get VM flavours by tenant
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: List of flavours
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+  /tenants/{tenant}/vms/flavours/{flavourId}:
+    delete:
+      tags: [VMs]
+      summary: Delete flavour price by ID
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: flavourId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Deleted
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+        "204":
+          $ref: '#/components/responses/NoContent'
+
+  /vms/flavour/{flavourId}/pricing:
+    post:
+      tags: [VMs]
+      summary: Update flavour pricing
+      parameters:
+        - name: flavourId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Pricing updated
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+        "201":
+          $ref: '#/components/responses/Created'
+        "409":
+          $ref: '#/components/responses/Conflict'
+
+  /tenants/{tenant}/vms/{vmId}/power/{action}:
+    post:
+      tags: [VMs]
+      summary: Execute VM power action
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: vmId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: action
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Action executed
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+        "201":
+          $ref: '#/components/responses/Created'
+        "409":
+          $ref: '#/components/responses/Conflict'
+
+  /tenants/{tenant}/vms/{vmId}/logs:
+    get:
+      tags: [VMs]
+      summary: Get VM logs
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: vmId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: VM logs
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+  /vms/osimages:
+    get:
+      tags: [VMs]
+      summary: Get OS images for VMs
+      operationId: getVMOSImages
+      responses:
+        "200":
+          description: List of OS images
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+  /vms/vgpu-flavours:
+    get:
+      tags: [VMs]
+      summary: Get vGPU flavours
+      operationId: getVGPUFlavours
+      responses:
+        "200":
+          description: List of vGPU flavours
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+  /network/underlay:
+    get:
+      tags: [Network]
+      summary: Get underlay
+      operationId: getUnderlay
+      responses:
+        "200":
+          description: Underlay config
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+    post:
+      tags: [Network]
+      summary: Create underlay
+      operationId: createUnderlay
+      responses:
+        "200":
+          description: Underlay created
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+        "201":
+          $ref: '#/components/responses/Created'
+        "409":
+          $ref: '#/components/responses/Conflict'
+
+  /tenants/{tenant}/network/tenantUnderlay:
+    post:
+      tags: [Network]
+      summary: Create tenant underlay
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Tenant underlay created
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+        "201":
+          $ref: '#/components/responses/Created'
+        "409":
+          $ref: '#/components/responses/Conflict'
+
+  /tenants/{tenant}/network/underlay/{computeNodeName}:
+    get:
+      tags: [Network]
+      summary: Get tenant underlay
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: computeNodeName
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Tenant underlay
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+    delete:
+      tags: [Network]
+      summary: Delete tenant underlay
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: computeNodeName
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Deleted
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+        "204":
+          $ref: '#/components/responses/NoContent'
+
+  /tenants/{tenant}/network/overlay:
+    post:
+      tags: [Network]
+      summary: Create tenant overlay
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Overlay created
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+        "201":
+          $ref: '#/components/responses/Created'
+        "409":
+          $ref: '#/components/responses/Conflict'
+
+  /tenants/{tenant}/network/vrf-network-status:
+    get:
+      tags: [Network]
+      summary: Get VRF network status
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: VRF status
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+  /network/vrf-networks-status:
+    get:
+      tags: [Network]
+      summary: Get all VRF network status
+      operationId: getAllVrfNetworkStatus
+      responses:
+        "200":
+          description: All VRF statuses
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+  /tenants/{tenant}/network/compute-status/{computeNodeName}:
+    get:
+      tags: [Network]
+      summary: Get compute status
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: computeNodeName
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Compute status
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+  /network/topologies:
+    get:
+      tags: [Network]
+      summary: Get network config (topologies)
+      operationId: getNetworkConfig
+      responses:
+        "200":
+          description: Network config
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+  /dashboard:
+    get:
+      tags: [Dashboard]
+      summary: Get dashboard stats
+      operationId: getDashboardStats
+      responses:
+        "200":
+          description: Dashboard statistics
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+  /cms/api/v1/tenants/{tenantID}/vms:
+    get:
+      tags: [CMS]
+      summary: CMS - List VMs
+      parameters:
+        - name: tenantID
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: List of VMs
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+    post:
+      tags: [CMS]
+      summary: CMS - Allocate VM
+      parameters:
+        - name: tenantID
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: VM allocated
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+        "201":
+          $ref: '#/components/responses/Created'
+        "409":
+          $ref: '#/components/responses/Conflict'
+
+  /cms/api/v1/tenants/{tenantID}/vms/{vmId}:
+    get:
+      tags: [CMS]
+      summary: CMS - Get VM
+      parameters:
+        - name: tenantID
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: vmId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: VM
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+    delete:
+      tags: [CMS]
+      summary: CMS - Deallocate VM
+      parameters:
+        - name: tenantID
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: vmId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Deallocated
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+        "204":
+          $ref: '#/components/responses/NoContent'
+
+  /cms/api/v1/tenants/{tenantID}/flavour:
+    get:
+      tags: [CMS]
+      summary: CMS - Get VM flavours
+      parameters:
+        - name: tenantID
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: List of flavours
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+  /tenants/{tenant}/clusters:
+    get:
+      tags: [Clusters]
+      summary: List clusters
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: List of clusters
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+    post:
+      tags: [Clusters]
+      summary: Create cluster
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Cluster created
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+        "201":
+          $ref: '#/components/responses/Created'
+        "409":
+          $ref: '#/components/responses/Conflict'
+
+  /tenants/{tenant}/clusters/external:
+    post:
+      tags: [Clusters]
+      summary: Onboard external cluster
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: External cluster onboarded
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+        "201":
+          $ref: '#/components/responses/Created'
+        "409":
+          $ref: '#/components/responses/Conflict'
+
+  /tenants/{tenant}/clusters/{clusterID}:
+    get:
+      tags: [Clusters]
+      summary: Get cluster
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: clusterID
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Cluster
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+    patch:
+      tags: [Clusters]
+      summary: Update cluster
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: clusterID
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Updated
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+    put:
+      tags: [Clusters]
+      summary: Scale cluster
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: clusterID
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Scaled
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+    delete:
+      tags: [Clusters]
+      summary: Delete cluster
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: clusterID
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Deleted
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+        "204":
+          $ref: '#/components/responses/NoContent'
+
+  /tenants/{tenant}/clusters/{clusterID}/kubeconfig:
+    get:
+      tags: [Clusters]
+      summary: Get cluster kubeconfig
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: clusterID
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Kubeconfig
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+  /tenants/{tenant}/clusters/{clusterID}/workloads:
+    get:
+      tags: [Clusters]
+      summary: Get workloads
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: clusterID
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: List of workloads
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+    post:
+      tags: [Clusters]
+      summary: Add workloads
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: clusterID
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Workloads added
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+        "201":
+          $ref: '#/components/responses/Created'
+        "409":
+          $ref: '#/components/responses/Conflict'
+    delete:
+      tags: [Clusters]
+      summary: Delete workloads
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: clusterID
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Deleted
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+        "204":
+          $ref: '#/components/responses/NoContent'
+
+  /tenants/{tenant}/clusters/{clusterID}/upgrade:
+    post:
+      tags: [Clusters]
+      summary: Upgrade cluster
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: clusterID
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Upgrade started
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+        "201":
+          $ref: '#/components/responses/Created'
+        "409":
+          $ref: '#/components/responses/Conflict'
+
+  /tenants/{tenant}/clusters/{clusterID}/migs:
+    get:
+      tags: [Clusters]
+      summary: Get MIG status
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: clusterID
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: MIG status
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+    post:
+      tags: [Clusters]
+      summary: Enable MIG
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: clusterID
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: MIG enabled
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+        "201":
+          $ref: '#/components/responses/Created'
+        "409":
+          $ref: '#/components/responses/Conflict'
+
+  /tenants/{tenant}/clusters/{clusterID}/migs/capacity:
+    get:
+      tags: [Clusters]
+      summary: Get cluster MIG capacity
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: clusterID
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: MIG capacity
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+  /tenants/{tenant}/clusters/{clusterID}/csi-drivers:
+    post:
+      tags: [Clusters]
+      summary: Deploy CSI driver
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: clusterID
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: CSI deployed
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+        "201":
+          $ref: '#/components/responses/Created'
+        "409":
+          $ref: '#/components/responses/Conflict'
+
+  /tenants/{tenant}/clusters/{clusterID}/csi-drivers/{csiID}:
+    delete:
+      tags: [Clusters]
+      summary: Delete CSI driver
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: clusterID
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: csiID
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Deleted
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+        "204":
+          $ref: '#/components/responses/NoContent'
+
+  /clusters/versions:
+    get:
+      tags: [Clusters]
+      summary: Get cluster versions
+      operationId: getClusterVersions
+      responses:
+        "200":
+          description: List of versions
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+  /tenants/{tenant}/paas/initialize:
+    post:
+      tags: [PaaS]
+      summary: Create/initialize PaaS cluster
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: PaaS cluster created
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+        "201":
+          $ref: '#/components/responses/Created'
+        "409":
+          $ref: '#/components/responses/Conflict'
+
+  /tenants/{tenant}/paas:
+    get:
+      tags: [PaaS]
+      summary: Get PaaS cluster
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: PaaS cluster
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+  /tenants/{tenant}/paas/teardown:
+    delete:
+      tags: [PaaS]
+      summary: Teardown/delete PaaS cluster
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: PaaS cluster torn down
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+        "204":
+          $ref: '#/components/responses/NoContent'
+
+  /tenants/{tenant}/endpoints:
+    get:
+      tags: [Endpoints]
+      summary: List endpoints
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: List of endpoints
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+    post:
+      tags: [Endpoints]
+      summary: Create endpoint
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Endpoint created
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+        "201":
+          $ref: '#/components/responses/Created'
+        "409":
+          $ref: '#/components/responses/Conflict'
+
+  /tenants/{tenant}/endpoints/{endpointID}:
+    get:
+      tags: [Endpoints]
+      summary: Get endpoint
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: endpointID
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Endpoint
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+    delete:
+      tags: [Endpoints]
+      summary: Delete endpoint
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: endpointID
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Deleted
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+        "204":
+          $ref: '#/components/responses/NoContent'
+
+  /tenants/{tenant}/jupyterhub/endpoints:
+    get:
+      tags: [Endpoints]
+      summary: Get JupyterHub endpoints
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: List of JupyterHub endpoints
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+  /features:
+    get:
+      tags: [Features]
+      summary: Get capabilities/features
+      operationId: getCapabilities
+      responses:
+        "200":
+          description: List of features
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+  /servers:
+    get:
+      tags: [Servers]
+      summary: List all servers
+      operationId: getAllServers
+      responses:
+        "200":
+          description: List of servers
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+  /servers/{id}:
+    get:
+      tags: [Servers]
+      summary: Get server by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Server
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+  /tenants/{tenant}/s3/buckets:
+    get:
+      tags: [S3]
+      summary: List S3 buckets
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: List of buckets
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+    post:
+      tags: [S3]
+      summary: Create S3 bucket
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Bucket created
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+        "201":
+          $ref: '#/components/responses/Created'
+        "409":
+          $ref: '#/components/responses/Conflict'
+
+  /tenants/{tenant}/s3/buckets/{bucketName}:
+    get:
+      tags: [S3]
+      summary: Get S3 bucket
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: bucketName
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Bucket
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+    delete:
+      tags: [S3]
+      summary: Delete S3 bucket
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: bucketName
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Deleted
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+        "204":
+          $ref: '#/components/responses/NoContent'
+
+  /tenants/{tenant}/s3/buckets/{bucketName}/files:
+    get:
+      tags: [S3]
+      summary: List files in bucket
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: bucketName
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: List of files
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+    post:
+      tags: [S3]
+      summary: Upload file to bucket
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: bucketName
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: File uploaded
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+        "201":
+          $ref: '#/components/responses/Created'
+        "409":
+          $ref: '#/components/responses/Conflict'
+    delete:
+      tags: [S3]
+      summary: Delete file(s) from bucket
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: bucketName
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Deleted
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+        "204":
+          $ref: '#/components/responses/NoContent'
+
+  /tenants/{tenant}/s3/buckets/{bucketName}/file:
+    get:
+      tags: [S3]
+      summary: Download file from bucket
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: bucketName
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: File content
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+  /tenants/{tenant}/s3/upload/status/{task_id}:
+    get:
+      tags: [S3]
+      summary: Get upload status
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: task_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Upload status
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+  /settings:
+    get:
+      tags: [Admin Settings]
+      summary: Get admin settings
+      operationId: getSettings
+      responses:
+        "200":
+          description: Settings
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+    patch:
+      tags: [Admin Settings]
+      summary: Update admin settings
+      operationId: updateSettings
+      responses:
+        "200":
+          description: Settings updated
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+  /tenants/{tenant}/vpcs:
+    get:
+      tags: [VPC]
+      summary: List VPCs
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: List of VPCs
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+    post:
+      tags: [VPC]
+      summary: Add VPC
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: VPC added
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+        "201":
+          $ref: '#/components/responses/Created'
+        "409":
+          $ref: '#/components/responses/Conflict'
+
+  /tenants/{tenant}/vpcs/{id}:
+    get:
+      tags: [VPC]
+      summary: Get VPC by ID
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: VPC
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+    delete:
+      tags: [VPC]
+      summary: Remove VPC
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Removed
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+        "204":
+          $ref: '#/components/responses/NoContent'
+
+  /tenants/{tenant}/subnets:
+    get:
+      tags: [VPC]
+      summary: List subnets
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: List of subnets
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+    post:
+      tags: [VPC]
+      summary: Create subnet
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Subnet created
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+        "201":
+          $ref: '#/components/responses/Created'
+        "409":
+          $ref: '#/components/responses/Conflict'
+
+  /tenants/{tenant}/subnets/{id}:
+    delete:
+      tags: [VPC]
+      summary: Remove subnet
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Removed
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+        "204":
+          $ref: '#/components/responses/NoContent'
+
+  /tenants/{tenant}/security-groups:
+    get:
+      tags: [Security Groups]
+      summary: List security groups
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: List of security groups
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+    post:
+      tags: [Security Groups]
+      summary: Add security group
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Security group added
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+        "201":
+          $ref: '#/components/responses/Created'
+        "409":
+          $ref: '#/components/responses/Conflict'
+
+  /tenants/{tenant}/security-groups/{id}:
+    get:
+      tags: [Security Groups]
+      summary: Get security group by ID
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Security group
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+    delete:
+      tags: [Security Groups]
+      summary: Remove security group
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Removed
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+        "204":
+          $ref: '#/components/responses/NoContent'
+
+  /tenants/{tenant}/templates:
+    get:
+      tags: [Templates]
+      summary: List templates
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: List of templates
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+    post:
+      tags: [Templates]
+      summary: Add template
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Template added
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+        "201":
+          $ref: '#/components/responses/Created'
+        "409":
+          $ref: '#/components/responses/Conflict'
+
+  /tenants/{tenant}/templates/{id}:
+    get:
+      tags: [Templates]
+      summary: Get template by ID
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Template
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+    delete:
+      tags: [Templates]
+      summary: Remove template
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Removed
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+        "204":
+          $ref: '#/components/responses/NoContent'
+
+  /totalcapacity:
+    get:
+      tags: [Quotas]
+      summary: Get total capacity
+      operationId: getTotalCapacity
+      responses:
+        "200":
+          description: Total capacity
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+  /totalcapacity/{resourceType}:
+    get:
+      tags: [Quotas]
+      summary: Get total capacity by resource type
+      parameters:
+        - name: resourceType
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Capacity
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+    patch:
+      tags: [Quotas]
+      summary: Update total capacity
+      parameters:
+        - name: resourceType
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Updated
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+  /totalcapacity/{resourceType}/{resourceSubtype}:
+    patch:
+      tags: [Quotas]
+      summary: Update total capacity by subtype
+      parameters:
+        - name: resourceType
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: resourceSubtype
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Updated
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+  /tenants/{tenant}/quotas:
+    get:
+      tags: [Quotas]
+      summary: Get tenant quotas
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Tenant quotas
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+    post:
+      tags: [Quotas]
+      summary: Create tenant quota
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Quota created
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+        "201":
+          $ref: '#/components/responses/Created'
+        "409":
+          $ref: '#/components/responses/Conflict'
+    patch:
+      tags: [Quotas]
+      summary: Update tenant quota
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Updated
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+  /tenants/{tenant}/quotas/{resourceType}:
+    get:
+      tags: [Quotas]
+      summary: Get tenant quotas by resource type
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: resourceType
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Quotas
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+  /tenants/{tenant}/reservations:
+    get:
+      tags: [Quotas]
+      summary: Get tenant reservations
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: List of reservations
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+    post:
+      tags: [Quotas]
+      summary: Create reservation
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Reservation created
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+        "201":
+          $ref: '#/components/responses/Created'
+        "409":
+          $ref: '#/components/responses/Conflict'
+    patch:
+      tags: [Quotas]
+      summary: Update reservation
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Updated
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+  /defaultquotas:
+    get:
+      tags: [Quotas]
+      summary: Get default quotas
+      operationId: getDefaultQuotas
+      responses:
+        "200":
+          description: Default quotas
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+    post:
+      tags: [Quotas]
+      summary: Create default quotas
+      operationId: createDefaultQuotas
+      responses:
+        "200":
+          description: Created
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+        "201":
+          $ref: '#/components/responses/Created'
+        "409":
+          $ref: '#/components/responses/Conflict'
+    patch:
+      tags: [Quotas]
+      summary: Update default quotas
+      operationId: updateDefaultQuotas
+      responses:
+        "200":
+          description: Updated
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+  /defaultquotas/{resourceType}:
+    get:
+      tags: [Quotas]
+      summary: Get default quotas by resource type
+      parameters:
+        - name: resourceType
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Default quotas
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+  /defaultquotas/{resourceType}/{resourceSubtype}:
+    get:
+      tags: [Quotas]
+      summary: Get default quotas by resource
+      parameters:
+        - name: resourceType
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: resourceSubtype
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Default quotas
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+  /tenants/{tenant}/slurm:
+    get:
+      tags: [Slurm]
+      summary: Get Slurm clusters
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: List of Slurm clusters
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+    post:
+      tags: [Slurm]
+      summary: Create Slurm cluster
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Slurm cluster created
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+        "201":
+          $ref: '#/components/responses/Created'
+        "409":
+          $ref: '#/components/responses/Conflict'
+
+  /tenants/{tenant}/slurm/{slurmID}:
+    get:
+      tags: [Slurm]
+      summary: Get Slurm cluster
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: slurmID
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Slurm cluster
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+    delete:
+      tags: [Slurm]
+      summary: Delete Slurm cluster
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: slurmID
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Deleted
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+        "204":
+          $ref: '#/components/responses/NoContent'
+
+  /tenants/{tenant}/load-balancers:
+    get:
+      tags: [Load Balancers]
+      summary: List load balancers
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: List of load balancers
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+    post:
+      tags: [Load Balancers]
+      summary: Create load balancer
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Load balancer created
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+        "201":
+          $ref: '#/components/responses/Created'
+        "409":
+          $ref: '#/components/responses/Conflict'
+
+  /tenants/{tenant}/load-balancers/{id}:
+    get:
+      tags: [Load Balancers]
+      summary: Get load balancer by ID
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Load balancer
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+    delete:
+      tags: [Load Balancers]
+      summary: Delete load balancer
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Deleted
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+        "204":
+          $ref: '#/components/responses/NoContent'
+
+  /tenants/{tenant}/clusters/{clusterID}/storage-classes:
+    get:
+      tags: [Storage Classes]
+      summary: List storage classes
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: clusterID
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: List of storage classes
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+    post:
+      tags: [Storage Classes]
+      summary: Create storage class
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: clusterID
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Storage class created
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+        "201":
+          $ref: '#/components/responses/Created'
+        "409":
+          $ref: '#/components/responses/Conflict'
+
+  /tenants/{tenant}/clusters/{clusterID}/storage-classes/{id}:
+    get:
+      tags: [Storage Classes]
+      summary: Get storage class
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: clusterID
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Storage class
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+    delete:
+      tags: [Storage Classes]
+      summary: Delete storage class
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: clusterID
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Deleted
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+        "204":
+          $ref: '#/components/responses/NoContent'
+
+  /tenants/{tenant}/paas/datasets:
+    get:
+      tags: [Datasets]
+      summary: List datasets
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: List of datasets
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+    post:
+      tags: [Datasets]
+      summary: Create dataset
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Dataset created
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+        "201":
+          $ref: '#/components/responses/Created'
+        "409":
+          $ref: '#/components/responses/Conflict'
+
+  /tenants/{tenant}/paas/datasets/{id}:
+    get:
+      tags: [Datasets]
+      summary: Get dataset
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Dataset
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+    delete:
+      tags: [Datasets]
+      summary: Delete dataset
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Deleted
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+        "204":
+          $ref: '#/components/responses/NoContent'
+
+  /tenants/{tenant}/clusters/{clusterID}/volumes:
+    get:
+      tags: [Data Volumes]
+      summary: List data volumes
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: clusterID
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: List of volumes
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+    post:
+      tags: [Data Volumes]
+      summary: Create data volume
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: clusterID
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Volume created
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+        "201":
+          $ref: '#/components/responses/Created'
+        "409":
+          $ref: '#/components/responses/Conflict'
+
+  /tenants/{tenant}/clusters/{clusterID}/volumes/{id}:
+    get:
+      tags: [Data Volumes]
+      summary: Get data volume
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: clusterID
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Volume
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+    delete:
+      tags: [Data Volumes]
+      summary: Delete data volume
+      parameters:
+        - name: tenant
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: clusterID
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Deleted
+
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "401":
+          $ref: '#/components/responses/Unauthorized'
+        "403":
+          $ref: '#/components/responses/Forbidden'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "500":
+          $ref: '#/components/responses/InternalServerError'
+
+        "204":
+          $ref: '#/components/responses/NoContent'
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: JWT from auth middleware
+
+  responses:
+    BadRequest:
+      description: Bad Request - invalid or malformed request
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication
+    Forbidden:
+      description: Forbidden - insufficient permissions
+    NotFound:
+      description: Not Found - resource does not exist
+    Conflict:
+      description: Conflict - resource conflict (e.g. duplicate)
+    InternalServerError:
+      description: Internal Server Error - server error
+    Created:
+      description: Created - resource created successfully
+    NoContent:
+      description: No Content - success with no response body
+
+security:
+  - bearerAuth: []

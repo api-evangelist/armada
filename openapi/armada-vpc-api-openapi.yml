@@ -1,0 +1,235 @@
+openapi: 3.0.3
+info:
+  title: Orchestrator Admin Settings VPC API
+  description: 'API for the GPUaaS Orchestrator microservice. Handles tenants, clusters, VMs,
+
+    storage, networking, catalogs, quotas, and related infrastructure operations.
+
+    '
+  version: 1.0.0
+  contact:
+    name: GPUaaS Platform
+servers:
+- url: /
+  description: Relative base (prefix with deployment base URL)
+security:
+- bearerAuth: []
+tags:
+- name: VPC
+paths:
+  /tenants/{tenant}/vpcs:
+    get:
+      tags:
+      - VPC
+      summary: List VPCs
+      parameters:
+      - name: tenant
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: List of VPCs
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    post:
+      tags:
+      - VPC
+      summary: Add VPC
+      parameters:
+      - name: tenant
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: VPC added
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '201':
+          $ref: '#/components/responses/Created'
+        '409':
+          $ref: '#/components/responses/Conflict'
+  /tenants/{tenant}/vpcs/{id}:
+    get:
+      tags:
+      - VPC
+      summary: Get VPC by ID
+      parameters:
+      - name: tenant
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: VPC
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    delete:
+      tags:
+      - VPC
+      summary: Remove VPC
+      parameters:
+      - name: tenant
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Removed
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '204':
+          $ref: '#/components/responses/NoContent'
+  /tenants/{tenant}/subnets:
+    get:
+      tags:
+      - VPC
+      summary: List subnets
+      parameters:
+      - name: tenant
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: List of subnets
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    post:
+      tags:
+      - VPC
+      summary: Create subnet
+      parameters:
+      - name: tenant
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Subnet created
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '201':
+          $ref: '#/components/responses/Created'
+        '409':
+          $ref: '#/components/responses/Conflict'
+  /tenants/{tenant}/subnets/{id}:
+    delete:
+      tags:
+      - VPC
+      summary: Remove subnet
+      parameters:
+      - name: tenant
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Removed
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '204':
+          $ref: '#/components/responses/NoContent'
+components:
+  responses:
+    NoContent:
+      description: No Content - success with no response body
+    InternalServerError:
+      description: Internal Server Error - server error
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication
+    BadRequest:
+      description: Bad Request - invalid or malformed request
+    Conflict:
+      description: Conflict - resource conflict (e.g. duplicate)
+    NotFound:
+      description: Not Found - resource does not exist
+    Forbidden:
+      description: Forbidden - insufficient permissions
+    Created:
+      description: Created - resource created successfully
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: JWT from auth middleware

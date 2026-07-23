@@ -1,0 +1,425 @@
+openapi: 3.0.3
+info:
+  title: Orchestrator Admin Settings Quotas API
+  description: 'API for the GPUaaS Orchestrator microservice. Handles tenants, clusters, VMs,
+
+    storage, networking, catalogs, quotas, and related infrastructure operations.
+
+    '
+  version: 1.0.0
+  contact:
+    name: GPUaaS Platform
+servers:
+- url: /
+  description: Relative base (prefix with deployment base URL)
+security:
+- bearerAuth: []
+tags:
+- name: Quotas
+paths:
+  /totalcapacity:
+    get:
+      tags:
+      - Quotas
+      summary: Get total capacity
+      operationId: getTotalCapacity
+      responses:
+        '200':
+          description: Total capacity
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /totalcapacity/{resourceType}:
+    get:
+      tags:
+      - Quotas
+      summary: Get total capacity by resource type
+      parameters:
+      - name: resourceType
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Capacity
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    patch:
+      tags:
+      - Quotas
+      summary: Update total capacity
+      parameters:
+      - name: resourceType
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Updated
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /totalcapacity/{resourceType}/{resourceSubtype}:
+    patch:
+      tags:
+      - Quotas
+      summary: Update total capacity by subtype
+      parameters:
+      - name: resourceType
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: resourceSubtype
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Updated
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /tenants/{tenant}/quotas:
+    get:
+      tags:
+      - Quotas
+      summary: Get tenant quotas
+      parameters:
+      - name: tenant
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Tenant quotas
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    post:
+      tags:
+      - Quotas
+      summary: Create tenant quota
+      parameters:
+      - name: tenant
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Quota created
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '201':
+          $ref: '#/components/responses/Created'
+        '409':
+          $ref: '#/components/responses/Conflict'
+    patch:
+      tags:
+      - Quotas
+      summary: Update tenant quota
+      parameters:
+      - name: tenant
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Updated
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /tenants/{tenant}/quotas/{resourceType}:
+    get:
+      tags:
+      - Quotas
+      summary: Get tenant quotas by resource type
+      parameters:
+      - name: tenant
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: resourceType
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Quotas
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /tenants/{tenant}/reservations:
+    get:
+      tags:
+      - Quotas
+      summary: Get tenant reservations
+      parameters:
+      - name: tenant
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: List of reservations
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    post:
+      tags:
+      - Quotas
+      summary: Create reservation
+      parameters:
+      - name: tenant
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Reservation created
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '201':
+          $ref: '#/components/responses/Created'
+        '409':
+          $ref: '#/components/responses/Conflict'
+    patch:
+      tags:
+      - Quotas
+      summary: Update reservation
+      parameters:
+      - name: tenant
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Updated
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /defaultquotas:
+    get:
+      tags:
+      - Quotas
+      summary: Get default quotas
+      operationId: getDefaultQuotas
+      responses:
+        '200':
+          description: Default quotas
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    post:
+      tags:
+      - Quotas
+      summary: Create default quotas
+      operationId: createDefaultQuotas
+      responses:
+        '200':
+          description: Created
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '201':
+          $ref: '#/components/responses/Created'
+        '409':
+          $ref: '#/components/responses/Conflict'
+    patch:
+      tags:
+      - Quotas
+      summary: Update default quotas
+      operationId: updateDefaultQuotas
+      responses:
+        '200':
+          description: Updated
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /defaultquotas/{resourceType}:
+    get:
+      tags:
+      - Quotas
+      summary: Get default quotas by resource type
+      parameters:
+      - name: resourceType
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Default quotas
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /defaultquotas/{resourceType}/{resourceSubtype}:
+    get:
+      tags:
+      - Quotas
+      summary: Get default quotas by resource
+      parameters:
+      - name: resourceType
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: resourceSubtype
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Default quotas
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+components:
+  responses:
+    InternalServerError:
+      description: Internal Server Error - server error
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication
+    BadRequest:
+      description: Bad Request - invalid or malformed request
+    Conflict:
+      description: Conflict - resource conflict (e.g. duplicate)
+    NotFound:
+      description: Not Found - resource does not exist
+    Forbidden:
+      description: Forbidden - insufficient permissions
+    Created:
+      description: Created - resource created successfully
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: JWT from auth middleware

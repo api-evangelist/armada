@@ -1,0 +1,36 @@
+generated: '2026-07-18'
+method: derived
+source: openapi/armada-orchestrator-openapi-original.yml
+# Derived from the shared components.responses referenced across the Bridge
+# Orchestrator API. The API returns standard HTTP status codes with a plain
+# JSON error body (not RFC 9457 application/problem+json).
+format: http-status
+envelope:
+  note: >-
+    Error responses are keyed by HTTP status code and carry a human-readable
+    description. No application/problem+json media type is declared in the spec.
+problems:
+  - status: 400
+    name: BadRequest
+    title: Bad Request - invalid or malformed request
+    remediation: Validate the request body, path, and query parameters against the OpenAPI schema.
+  - status: 401
+    name: Unauthorized
+    title: Unauthorized - missing or invalid authentication
+    remediation: Supply a valid Bearer JWT in the Authorization header.
+  - status: 403
+    name: Forbidden
+    title: Forbidden - insufficient permissions
+    remediation: The authenticated principal lacks the RBAC role/permission for this operation.
+  - status: 404
+    name: NotFound
+    title: Not Found - resource does not exist
+    remediation: Confirm the resource id and tenant scope; the resource may have been deleted.
+  - status: 409
+    name: Conflict
+    title: Conflict - resource conflict (e.g. duplicate)
+    remediation: A resource with the same identifier already exists; use a unique name/id or update in place.
+  - status: 500
+    name: InternalServerError
+    title: Internal Server Error - server error
+    remediation: Retry with backoff; if it persists, contact Armada support with the request context.

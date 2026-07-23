@@ -1,0 +1,140 @@
+# Armada Bridge Documentation
+
+> Armada Bridge is a GPU Cloud Management Platform (PaaS) that enables enterprises, neoclouds, and research institutions to manage, provision, and orchestrate GPU infrastructure at scale. It supports bare-metal, virtual machine, and Kubernetes workloads across NVIDIA and AMD GPUs.
+
+## Overview
+
+- [Overview](https://docs.armada.ai/bridge/overview): Introduction to Armada Bridge, architecture, and key concepts
+- [Architecture](https://docs.armada.ai/bridge/overview/architecture): Platform architecture and component relationships
+- [Key Concepts](https://docs.armada.ai/bridge/overview/concepts): Core terminology and concepts
+- [Personas](https://docs.armada.ai/bridge/overview/personas): Admin and Tenant user roles
+
+## Admin Guide
+
+### Day 0 — Infrastructure Setup
+
+- [Infrastructure Overview](https://docs.armada.ai/bridge/admin-guide/day0/infrastructure): Initial infrastructure setup
+- [Import Infrastructure](https://docs.armada.ai/bridge/admin-guide/day0/import-infra): Import existing hardware into Bridge
+- [Discovery — Compute Topology](https://docs.armada.ai/bridge/admin-guide/day0/discovery/compute-topology): Discover and map compute nodes
+- [Discovery — Converged Topology](https://docs.armada.ai/bridge/admin-guide/day0/discovery/converged-topology): Converged infrastructure discovery
+- [GPU — NVIDIA Setup](https://docs.armada.ai/bridge/admin-guide/day0/gpu/nvidia): Configure NVIDIA GPUs
+- [GPU — AMD Setup](https://docs.armada.ai/bridge/admin-guide/day0/gpu/amd): Configure AMD GPUs
+- [Networking Overview](https://docs.armada.ai/bridge/admin-guide/day0/networking/overview): Network configuration overview
+- [Ethernet — Spectrum](https://docs.armada.ai/bridge/admin-guide/day0/networking/ethernet/spectrum): NVIDIA Spectrum Ethernet setup
+- [Ethernet — Cisco](https://docs.armada.ai/bridge/admin-guide/day0/networking/ethernet/cisco): Cisco Ethernet setup
+- [InfiniBand Overview](https://docs.armada.ai/bridge/admin-guide/day0/networking/infiniband/overview): InfiniBand networking setup
+- [InfiniBand — UFM](https://docs.armada.ai/bridge/admin-guide/day0/networking/infiniband/ufm): Unified Fabric Manager configuration
+- [NVSwitch](https://docs.armada.ai/bridge/admin-guide/day0/networking/nvswitch): NVSwitch fabric configuration
+- [Storage Overview](https://docs.armada.ai/bridge/admin-guide/day0/storage/overview): Storage backend options
+- [DDN Storage](https://docs.armada.ai/bridge/admin-guide/day0/storage/ddn): DDN ExaScaler integration
+- [Vast Data Storage](https://docs.armada.ai/bridge/admin-guide/day0/storage/vast): Vast Data integration
+- [Weka Storage](https://docs.armada.ai/bridge/admin-guide/day0/storage/weka): Weka.io integration
+- [NFS Storage](https://docs.armada.ai/bridge/admin-guide/day0/storage/nfs): NFS storage setup
+- [Metal Provisioning Overview](https://docs.armada.ai/bridge/admin-guide/day0/metal-provisioning/overview): Bare-metal provisioning
+- [Secure Measured Boot](https://docs.armada.ai/bridge/admin-guide/day0/metal-provisioning/secure-measured-boot): Secure boot configuration
+- [Hardware Attestation](https://docs.armada.ai/bridge/admin-guide/day0/metal-provisioning/hardware-attestation): Hardware attestation setup
+- [DPU Overview](https://docs.armada.ai/bridge/admin-guide/day0/dpu/overview): Data Processing Unit setup
+- [Bluefield-3](https://docs.armada.ai/bridge/admin-guide/day0/dpu/bf3): NVIDIA BlueField-3 DPU configuration
+- [SuperNIC](https://docs.armada.ai/bridge/admin-guide/day0/dpu/supernic): NVIDIA SuperNIC setup
+- [Gateway Overview](https://docs.armada.ai/bridge/admin-guide/day0/gateway/overview): Load balancer and gateway config
+- [F5 BIG-IP](https://docs.armada.ai/bridge/admin-guide/day0/gateway/f5): F5 BIG-IP gateway integration
+- [F5 BIG-IP Next](https://docs.armada.ai/bridge/admin-guide/day0/gateway/f5-bigip-next): F5 BIG-IP Next setup
+
+### Day N — Operations
+
+- [Day-N Overview](https://docs.armada.ai/bridge/admin-guide/day-n/overview): Ongoing platform operations
+- [Dashboard](https://docs.armada.ai/bridge/admin-guide/day-n/dashboard): Admin dashboard usage
+- [Tenant Creation](https://docs.armada.ai/bridge/admin-guide/day-n/tenants/tenant-creation): Create and configure tenants
+- [Tenant Operations](https://docs.armada.ai/bridge/admin-guide/day-n/tenants/tenant-operations): Manage existing tenants
+- [Tenant Quota & Pricing](https://docs.armada.ai/bridge/admin-guide/day-n/tenants/tenant-quota-pricing): Set quotas and pricing per tenant
+- [Tenant Deletion](https://docs.armada.ai/bridge/admin-guide/day-n/tenants/tenant-deletion): Remove tenants
+- [RBAC](https://docs.armada.ai/bridge/admin-guide/day-n/rbac): Role-based access control
+- [Create Users](https://docs.armada.ai/bridge/admin-guide/day-n/users/create-users): User provisioning
+- [Delete Users](https://docs.armada.ai/bridge/admin-guide/day-n/users/delete-users): User removal
+- [Catalog](https://docs.armada.ai/bridge/admin-guide/day-n/catalog): Service catalog management
+- [Default Quota](https://docs.armada.ai/bridge/admin-guide/day-n/default-quota): Set platform-wide default quotas
+
+### Administration
+
+- [Installation](https://docs.armada.ai/bridge/admin-guide/installation): Bridge installation guide
+- [Uninstallation](https://docs.armada.ai/bridge/admin-guide/uninstallation): Bridge removal
+- [Licensing](https://docs.armada.ai/bridge/admin-guide/licensing): License management
+- [Integrations](https://docs.armada.ai/bridge/admin-guide/integrations): Third-party integrations
+- [Reference Architecture](https://docs.armada.ai/bridge/admin-guide/reference-architecture): Recommended deployment architectures
+- [Troubleshooting](https://docs.armada.ai/bridge/admin-guide/troubleshooting-debugging): Debugging and troubleshooting
+
+## Tenant Guide
+
+- [Key Definitions](https://docs.armada.ai/bridge/tenant-guide/key-definitions): Glossary of terms for tenants
+- [Login to Bridge UI](https://docs.armada.ai/bridge/tenant-guide/login-to-bridge-ui): Authentication and login
+- [Roles & Permissions](https://docs.armada.ai/bridge/tenant-guide/roles-permissions): Tenant user roles
+
+### Compute
+
+- [Bare Metal Overview](https://docs.armada.ai/bridge/tenant-guide/compute/bare-metal/overview): Bare-metal compute allocation
+- [Bare Metal Allocation](https://docs.armada.ai/bridge/tenant-guide/compute/bare-metal/baremetal-allocation): Step-by-step bare-metal provisioning
+- [Virtual Machine Overview](https://docs.armada.ai/bridge/tenant-guide/compute/virtual-machine/overview): VM provisioning overview
+- [Virtual Machine — Getting Started](https://docs.armada.ai/bridge/tenant-guide/compute/virtual-machine/getting-started): Create and manage VMs
+- [Kubernetes Overview](https://docs.armada.ai/bridge/tenant-guide/compute/kubernetes/overview): Kubernetes cluster management
+- [Cluster Templates](https://docs.armada.ai/bridge/tenant-guide/compute/kubernetes/cluster-templates/overview): Pre-built cluster template options
+- [NVIDIA NIM Template](https://docs.armada.ai/bridge/tenant-guide/compute/kubernetes/cluster-templates/nvidia-nim): Deploy NVIDIA NIM inference clusters
+- [Ray-Enabled Template](https://docs.armada.ai/bridge/tenant-guide/compute/kubernetes/cluster-templates/ray-enabled): Distributed training with Ray
+- [JupyterHub KAI Template](https://docs.armada.ai/bridge/tenant-guide/compute/kubernetes/cluster-templates/jupyterhub-kai): JupyterHub on Kubernetes
+- [Cluster Scaling](https://docs.armada.ai/bridge/tenant-guide/compute/kubernetes/cluster-scaling): Scale Kubernetes clusters
+- [Cluster Observability](https://docs.armada.ai/bridge/tenant-guide/compute/kubernetes/cluster-observability): Monitor cluster health
+- [MIG Configuration](https://docs.armada.ai/bridge/tenant-guide/compute/kubernetes/mig-configuration): NVIDIA Multi-Instance GPU setup
+- [Storage Classes](https://docs.armada.ai/bridge/tenant-guide/compute/kubernetes/storage-classes): Kubernetes storage class options
+- [Endpoints](https://docs.armada.ai/bridge/tenant-guide/compute/kubernetes/endpoints): Expose services via endpoints
+- [OpenShift](https://docs.armada.ai/bridge/tenant-guide/compute/kubernetes/openshift): Red Hat OpenShift support
+
+### Storage & Data
+
+- [Storage Overview](https://docs.armada.ai/bridge/tenant-guide/storage/overview): Tenant storage options
+- [Volumes](https://docs.armada.ai/bridge/tenant-guide/storage/volumes): Create storage volumes and mount them on bare metal servers
+- [Datasets & Volumes Overview](https://docs.armada.ai/bridge/tenant-guide/datasets-and-volume/overview): Manage datasets and volumes
+- [Datasets](https://docs.armada.ai/bridge/tenant-guide/datasets-and-volume/datasets): Create and use datasets
+- [Volumes](https://docs.armada.ai/bridge/tenant-guide/datasets-and-volume/volumes): Persistent volume management
+
+### Networking & Security
+
+- [Network Overview](https://docs.armada.ai/bridge/tenant-guide/network/overview): Tenant networking
+- [Network — Getting Started](https://docs.armada.ai/bridge/tenant-guide/network/getting-started): Configure tenant networks
+- [Security Groups Overview](https://docs.armada.ai/bridge/tenant-guide/security-groups/overview): Firewall and security group rules
+- [Security Groups — Getting Started](https://docs.armada.ai/bridge/tenant-guide/security-groups/getting-started): Create security group policies
+
+### Slurm
+
+- [Slurm Overview](https://docs.armada.ai/bridge/tenant-guide/slurm/overview): HPC job scheduling with Slurm
+- [Slurm Cluster](https://docs.armada.ai/bridge/tenant-guide/slurm/slurm-cluster): Create and manage Slurm clusters
+- [Slurm Jobs](https://docs.armada.ai/bridge/tenant-guide/slurm/jobs): Submit and monitor jobs
+- [Slurm Resources](https://docs.armada.ai/bridge/tenant-guide/slurm/resources): Manage Slurm resource allocations
+- [Slurm Dashboard](https://docs.armada.ai/bridge/tenant-guide/slurm/dashboard): Monitor workloads via dashboard
+
+### AI Studio
+
+- [AI Studio Overview](https://docs.armada.ai/bridge/tenant-guide/ai-studio/overview): Integrated AI/ML tooling
+- [JupyterLab Overview](https://docs.armada.ai/bridge/tenant-guide/ai-studio/jupyterlab/overview): Managed JupyterLab environment
+- [JupyterLab — Start Server](https://docs.armada.ai/bridge/tenant-guide/ai-studio/jupyterlab/start-server): Launch a JupyterLab session
+- [JupyterLab — Manage Tokens](https://docs.armada.ai/bridge/tenant-guide/ai-studio/jupyterlab/manage-tokens): API token management
+- [Model-as-a-Service Overview](https://docs.armada.ai/bridge/tenant-guide/ai-studio/model-as-a-service/overview): Deploy and serve AI models
+- [Model Playground](https://docs.armada.ai/bridge/tenant-guide/ai-studio/model-as-a-service/model-playground): Interactive model testing
+- [API Key Management](https://docs.armada.ai/bridge/tenant-guide/ai-studio/model-as-a-service/api-key): Manage API keys for model endpoints
+- [LLM Monitoring](https://docs.armada.ai/bridge/tenant-guide/ai-studio/model-as-a-service/llm-monitoring-observability): Observability for LLM inference
+
+### Models
+
+- [Models Overview](https://docs.armada.ai/bridge/tenant-guide/models/overview): Model registry and management
+- [Deploy a Model](https://docs.armada.ai/bridge/tenant-guide/models/deploy-model): Deploy models for inference
+
+## Use Cases
+
+- [Use Cases Overview](https://docs.armada.ai/bridge/use-cases/overview): Industry use cases for Bridge
+- [Enterprise AI Factory](https://docs.armada.ai/bridge/use-cases/enterprise-ai-factory): Large-scale enterprise GPU cloud
+- [Neocloud](https://docs.armada.ai/bridge/use-cases/neocloud): GPU-as-a-service providers
+- [Sovereign Cloud](https://docs.armada.ai/bridge/use-cases/sovereign-cloud): Regulated and national cloud deployments
+- [Higher Education](https://docs.armada.ai/bridge/use-cases/higher-education): Research and academic institutions
+- [AI Grid](https://docs.armada.ai/bridge/use-cases/ai-grid): Distributed AI grid computing
+
+## API Reference
+
+- [API Documentation](https://docs.armada.ai/bridge/api): Interactive OpenAPI reference for the Bridge Orchestrator API (v1)

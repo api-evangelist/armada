@@ -1,8 +1,14 @@
 aid: armada
 name: Armada
-description: Armada is a company surfaced as a portfolio company of felicis, lux-capital, sv-angel and
-  added to the API Evangelist network as a stub for enrichment. This profile is a lead awaiting the enrichment
-  pipeline.
+description: >-
+  Armada is an edge computing company that deploys full-stack compute, connectivity, and AI
+  infrastructure into remote and disconnected environments. Its platform spans Atlas (an enterprise
+  console for monitoring and managing distributed IoT and edge assets), Galleon (ruggedized, rapidly
+  deployable modular data centers), and Bridge (a GPU cloud management platform / PaaS that provisions
+  and orchestrates bare-metal, virtual-machine, and Kubernetes GPU workloads across NVIDIA and AMD
+  hardware). The Bridge Orchestrator API exposes tenants, clusters, VMs, storage, networking, catalogs,
+  and quota operations for building sovereign and edge AI clouds, and an OpenAI-compatible
+  Model-as-a-Service inference API is available through Bridge AI Studio.
 url: https://raw.githubusercontent.com/api-evangelist/armada/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
@@ -10,14 +16,498 @@ x-backed-by:
 - felicis
 - lux-capital
 - sv-angel
-x-tier: stub
-x-tier-reason: portfolio-lead
+x-tier: enriched
+x-tier-reason: portfolio-lead-enriched
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-18'
+image: https://docs.armada.ai/img/logo-black.svg
 tags:
 - Company
-apis: []
+- Edge Computing
+- GPU Cloud
+- Infrastructure
+- Artificial Intelligence
+- Kubernetes
+- Bare Metal
+- IoT
+- Orchestration
+- Sovereign Cloud
+apis:
+- aid: armada:armada-admin-settings-api
+  name: Armada Admin Settings API
+  description: The Admin Settings API from Armada — 1 operation(s) for admin settings.
+  humanURL: https://docs.armada.ai/bridge/api
+  baseURL: https://console.armada.ai
+  tags:
+  - Admin Settings
+  properties:
+  - type: OpenAPI
+    url: openapi/armada-admin-settings-api-openapi.yml
+  - type: APIReference
+    url: https://docs.armada.ai/bridge/api
+  - type: Documentation
+    url: https://docs.armada.ai/bridge/overview
+- aid: armada:armada-app-catalog-api
+  name: Armada App Catalog API
+  description: The App Catalog API from Armada — 2 operation(s) for app catalog.
+  humanURL: https://docs.armada.ai/bridge/api
+  baseURL: https://console.armada.ai
+  tags:
+  - App Catalog
+  properties:
+  - type: OpenAPI
+    url: openapi/armada-app-catalog-api-openapi.yml
+  - type: APIReference
+    url: https://docs.armada.ai/bridge/api
+  - type: Documentation
+    url: https://docs.armada.ai/bridge/overview
+- aid: armada:armada-catalog-api
+  name: Armada Catalog API
+  description: The Catalog API from Armada — 5 operation(s) for catalog.
+  humanURL: https://docs.armada.ai/bridge/api
+  baseURL: https://console.armada.ai
+  tags:
+  - Catalog
+  properties:
+  - type: OpenAPI
+    url: openapi/armada-catalog-api-openapi.yml
+  - type: APIReference
+    url: https://docs.armada.ai/bridge/api
+  - type: Documentation
+    url: https://docs.armada.ai/bridge/overview
+- aid: armada:armada-clusters-api
+  name: Armada Clusters API
+  description: The Clusters API from Armada — 11 operation(s) for clusters.
+  humanURL: https://docs.armada.ai/bridge/api
+  baseURL: https://console.armada.ai
+  tags:
+  - Clusters
+  properties:
+  - type: OpenAPI
+    url: openapi/armada-clusters-api-openapi.yml
+  - type: APIReference
+    url: https://docs.armada.ai/bridge/api
+  - type: Documentation
+    url: https://docs.armada.ai/bridge/overview
+- aid: armada:armada-cms-api
+  name: Armada CMS API
+  description: The CMS API from Armada — 3 operation(s) for cms.
+  humanURL: https://docs.armada.ai/bridge/api
+  baseURL: https://console.armada.ai
+  tags:
+  - CMS
+  properties:
+  - type: OpenAPI
+    url: openapi/armada-cms-api-openapi.yml
+  - type: APIReference
+    url: https://docs.armada.ai/bridge/api
+  - type: Documentation
+    url: https://docs.armada.ai/bridge/overview
+- aid: armada:armada-dashboard-api
+  name: Armada Dashboard API
+  description: The Dashboard API from Armada — 1 operation(s) for dashboard.
+  humanURL: https://docs.armada.ai/bridge/api
+  baseURL: https://console.armada.ai
+  tags:
+  - Dashboard
+  properties:
+  - type: OpenAPI
+    url: openapi/armada-dashboard-api-openapi.yml
+  - type: APIReference
+    url: https://docs.armada.ai/bridge/api
+  - type: Documentation
+    url: https://docs.armada.ai/bridge/overview
+- aid: armada:armada-data-volumes-api
+  name: Armada Data Volumes API
+  description: The Data Volumes API from Armada — 2 operation(s) for data volumes.
+  humanURL: https://docs.armada.ai/bridge/api
+  baseURL: https://console.armada.ai
+  tags:
+  - Data Volumes
+  properties:
+  - type: OpenAPI
+    url: openapi/armada-data-volumes-api-openapi.yml
+  - type: APIReference
+    url: https://docs.armada.ai/bridge/api
+  - type: Documentation
+    url: https://docs.armada.ai/bridge/overview
+- aid: armada:armada-datasets-api
+  name: Armada Datasets API
+  description: The Datasets API from Armada — 2 operation(s) for datasets.
+  humanURL: https://docs.armada.ai/bridge/api
+  baseURL: https://console.armada.ai
+  tags:
+  - Datasets
+  properties:
+  - type: OpenAPI
+    url: openapi/armada-datasets-api-openapi.yml
+  - type: APIReference
+    url: https://docs.armada.ai/bridge/api
+  - type: Documentation
+    url: https://docs.armada.ai/bridge/overview
+- aid: armada:armada-device-discovery-api
+  name: Armada Device Discovery API
+  description: The Device Discovery API from Armada — 3 operation(s) for device discovery.
+  humanURL: https://docs.armada.ai/bridge/api
+  baseURL: https://console.armada.ai
+  tags:
+  - Device Discovery
+  properties:
+  - type: OpenAPI
+    url: openapi/armada-device-discovery-api-openapi.yml
+  - type: APIReference
+    url: https://docs.armada.ai/bridge/api
+  - type: Documentation
+    url: https://docs.armada.ai/bridge/overview
+- aid: armada:armada-endpoints-api
+  name: Armada Endpoints API
+  description: The Endpoints API from Armada — 3 operation(s) for endpoints.
+  humanURL: https://docs.armada.ai/bridge/api
+  baseURL: https://console.armada.ai
+  tags:
+  - Endpoints
+  properties:
+  - type: OpenAPI
+    url: openapi/armada-endpoints-api-openapi.yml
+  - type: APIReference
+    url: https://docs.armada.ai/bridge/api
+  - type: Documentation
+    url: https://docs.armada.ai/bridge/overview
+- aid: armada:armada-features-api
+  name: Armada Features API
+  description: The Features API from Armada — 1 operation(s) for features.
+  humanURL: https://docs.armada.ai/bridge/api
+  baseURL: https://console.armada.ai
+  tags:
+  - Features
+  properties:
+  - type: OpenAPI
+    url: openapi/armada-features-api-openapi.yml
+  - type: APIReference
+    url: https://docs.armada.ai/bridge/api
+  - type: Documentation
+    url: https://docs.armada.ai/bridge/overview
+- aid: armada:armada-health-debug-api
+  name: Armada Health & Debug API
+  description: The Health & Debug API from Armada — 2 operation(s) for health & debug.
+  humanURL: https://docs.armada.ai/bridge/api
+  baseURL: https://console.armada.ai
+  tags:
+  - Health & Debug
+  properties:
+  - type: OpenAPI
+    url: openapi/armada-health-debug-api-openapi.yml
+  - type: APIReference
+    url: https://docs.armada.ai/bridge/api
+  - type: Documentation
+    url: https://docs.armada.ai/bridge/overview
+- aid: armada:armada-infra-import-api
+  name: Armada Infra Import API
+  description: The Infra Import API from Armada — 7 operation(s) for infra import.
+  humanURL: https://docs.armada.ai/bridge/api
+  baseURL: https://console.armada.ai
+  tags:
+  - Infra Import
+  properties:
+  - type: OpenAPI
+    url: openapi/armada-infra-import-api-openapi.yml
+  - type: APIReference
+    url: https://docs.armada.ai/bridge/api
+  - type: Documentation
+    url: https://docs.armada.ai/bridge/overview
+- aid: armada:armada-load-balancers-api
+  name: Armada Load Balancers API
+  description: The Load Balancers API from Armada — 2 operation(s) for load balancers.
+  humanURL: https://docs.armada.ai/bridge/api
+  baseURL: https://console.armada.ai
+  tags:
+  - Load Balancers
+  properties:
+  - type: OpenAPI
+    url: openapi/armada-load-balancers-api-openapi.yml
+  - type: APIReference
+    url: https://docs.armada.ai/bridge/api
+  - type: Documentation
+    url: https://docs.armada.ai/bridge/overview
+- aid: armada:armada-log-level-api
+  name: Armada Log Level API
+  description: The Log Level API from Armada — 3 operation(s) for log level.
+  humanURL: https://docs.armada.ai/bridge/api
+  baseURL: https://console.armada.ai
+  tags:
+  - Log Level
+  properties:
+  - type: OpenAPI
+    url: openapi/armada-log-level-api-openapi.yml
+  - type: APIReference
+    url: https://docs.armada.ai/bridge/api
+  - type: Documentation
+    url: https://docs.armada.ai/bridge/overview
+- aid: armada:armada-metal-api
+  name: Armada Metal API
+  description: The Metal API from Armada — 8 operation(s) for metal.
+  humanURL: https://docs.armada.ai/bridge/api
+  baseURL: https://console.armada.ai
+  tags:
+  - Metal
+  properties:
+  - type: OpenAPI
+    url: openapi/armada-metal-api-openapi.yml
+  - type: APIReference
+    url: https://docs.armada.ai/bridge/api
+  - type: Documentation
+    url: https://docs.armada.ai/bridge/overview
+- aid: armada:armada-models-api
+  name: Armada Models API
+  description: The Models API from Armada — 3 operation(s) for models.
+  humanURL: https://docs.armada.ai/bridge/api
+  baseURL: https://console.armada.ai
+  tags:
+  - Models
+  properties:
+  - type: OpenAPI
+    url: openapi/armada-models-api-openapi.yml
+  - type: APIReference
+    url: https://docs.armada.ai/bridge/api
+  - type: Documentation
+    url: https://docs.armada.ai/bridge/overview
+- aid: armada:armada-monetize-api
+  name: Armada Monetize API
+  description: The Monetize API from Armada — 3 operation(s) for monetize.
+  humanURL: https://docs.armada.ai/bridge/api
+  baseURL: https://console.armada.ai
+  tags:
+  - Monetize
+  properties:
+  - type: OpenAPI
+    url: openapi/armada-monetize-api-openapi.yml
+  - type: APIReference
+    url: https://docs.armada.ai/bridge/api
+  - type: Documentation
+    url: https://docs.armada.ai/bridge/overview
+- aid: armada:armada-netq-api
+  name: Armada NetQ API
+  description: The NetQ API from Armada — 6 operation(s) for netq.
+  humanURL: https://docs.armada.ai/bridge/api
+  baseURL: https://console.armada.ai
+  tags:
+  - NetQ
+  properties:
+  - type: OpenAPI
+    url: openapi/armada-netq-api-openapi.yml
+  - type: APIReference
+    url: https://docs.armada.ai/bridge/api
+  - type: Documentation
+    url: https://docs.armada.ai/bridge/overview
+- aid: armada:armada-network-api
+  name: Armada Network API
+  description: The Network API from Armada — 8 operation(s) for network.
+  humanURL: https://docs.armada.ai/bridge/api
+  baseURL: https://console.armada.ai
+  tags:
+  - Network
+  properties:
+  - type: OpenAPI
+    url: openapi/armada-network-api-openapi.yml
+  - type: APIReference
+    url: https://docs.armada.ai/bridge/api
+  - type: Documentation
+    url: https://docs.armada.ai/bridge/overview
+- aid: armada:armada-paas-api
+  name: Armada PaaS API
+  description: The PaaS API from Armada — 3 operation(s) for paas.
+  humanURL: https://docs.armada.ai/bridge/api
+  baseURL: https://console.armada.ai
+  tags:
+  - PaaS
+  properties:
+  - type: OpenAPI
+    url: openapi/armada-paas-api-openapi.yml
+  - type: APIReference
+    url: https://docs.armada.ai/bridge/api
+  - type: Documentation
+    url: https://docs.armada.ai/bridge/overview
+- aid: armada:armada-quotas-api
+  name: Armada Quotas API
+  description: The Quotas API from Armada — 9 operation(s) for quotas.
+  humanURL: https://docs.armada.ai/bridge/api
+  baseURL: https://console.armada.ai
+  tags:
+  - Quotas
+  properties:
+  - type: OpenAPI
+    url: openapi/armada-quotas-api-openapi.yml
+  - type: APIReference
+    url: https://docs.armada.ai/bridge/api
+  - type: Documentation
+    url: https://docs.armada.ai/bridge/overview
+- aid: armada:armada-s3-api
+  name: Armada S3 API
+  description: The S3 API from Armada — 5 operation(s) for s3.
+  humanURL: https://docs.armada.ai/bridge/api
+  baseURL: https://console.armada.ai
+  tags:
+  - S3
+  properties:
+  - type: OpenAPI
+    url: openapi/armada-s3-api-openapi.yml
+  - type: APIReference
+    url: https://docs.armada.ai/bridge/api
+  - type: Documentation
+    url: https://docs.armada.ai/bridge/overview
+- aid: armada:armada-security-groups-api
+  name: Armada Security Groups API
+  description: The Security Groups API from Armada — 2 operation(s) for security groups.
+  humanURL: https://docs.armada.ai/bridge/api
+  baseURL: https://console.armada.ai
+  tags:
+  - Security Groups
+  properties:
+  - type: OpenAPI
+    url: openapi/armada-security-groups-api-openapi.yml
+  - type: APIReference
+    url: https://docs.armada.ai/bridge/api
+  - type: Documentation
+    url: https://docs.armada.ai/bridge/overview
+- aid: armada:armada-servers-api
+  name: Armada Servers API
+  description: The Servers API from Armada — 2 operation(s) for servers.
+  humanURL: https://docs.armada.ai/bridge/api
+  baseURL: https://console.armada.ai
+  tags:
+  - Servers
+  properties:
+  - type: OpenAPI
+    url: openapi/armada-servers-api-openapi.yml
+  - type: APIReference
+    url: https://docs.armada.ai/bridge/api
+  - type: Documentation
+    url: https://docs.armada.ai/bridge/overview
+- aid: armada:armada-slurm-api
+  name: Armada Slurm API
+  description: The Slurm API from Armada — 2 operation(s) for slurm.
+  humanURL: https://docs.armada.ai/bridge/api
+  baseURL: https://console.armada.ai
+  tags:
+  - Slurm
+  properties:
+  - type: OpenAPI
+    url: openapi/armada-slurm-api-openapi.yml
+  - type: APIReference
+    url: https://docs.armada.ai/bridge/api
+  - type: Documentation
+    url: https://docs.armada.ai/bridge/overview
+- aid: armada:armada-storage-api
+  name: Armada Storage API
+  description: The Storage API from Armada — 6 operation(s) for storage.
+  humanURL: https://docs.armada.ai/bridge/api
+  baseURL: https://console.armada.ai
+  tags:
+  - Storage
+  properties:
+  - type: OpenAPI
+    url: openapi/armada-storage-api-openapi.yml
+  - type: APIReference
+    url: https://docs.armada.ai/bridge/api
+  - type: Documentation
+    url: https://docs.armada.ai/bridge/overview
+- aid: armada:armada-storage-classes-api
+  name: Armada Storage Classes API
+  description: The Storage Classes API from Armada — 2 operation(s) for storage classes.
+  humanURL: https://docs.armada.ai/bridge/api
+  baseURL: https://console.armada.ai
+  tags:
+  - Storage Classes
+  properties:
+  - type: OpenAPI
+    url: openapi/armada-storage-classes-api-openapi.yml
+  - type: APIReference
+    url: https://docs.armada.ai/bridge/api
+  - type: Documentation
+    url: https://docs.armada.ai/bridge/overview
+- aid: armada:armada-templates-api
+  name: Armada Templates API
+  description: The Templates API from Armada — 2 operation(s) for templates.
+  humanURL: https://docs.armada.ai/bridge/api
+  baseURL: https://console.armada.ai
+  tags:
+  - Templates
+  properties:
+  - type: OpenAPI
+    url: openapi/armada-templates-api-openapi.yml
+  - type: APIReference
+    url: https://docs.armada.ai/bridge/api
+  - type: Documentation
+    url: https://docs.armada.ai/bridge/overview
+- aid: armada:armada-tenant-common-storage-api
+  name: Armada Tenant Common Storage API
+  description: The Tenant Common Storage API from Armada — 2 operation(s) for tenant common storage.
+  humanURL: https://docs.armada.ai/bridge/api
+  baseURL: https://console.armada.ai
+  tags:
+  - Tenant Common Storage
+  properties:
+  - type: OpenAPI
+    url: openapi/armada-tenant-common-storage-api-openapi.yml
+  - type: APIReference
+    url: https://docs.armada.ai/bridge/api
+  - type: Documentation
+    url: https://docs.armada.ai/bridge/overview
+- aid: armada:armada-tenants-api
+  name: Armada Tenants API
+  description: The Tenants API from Armada — 2 operation(s) for tenants.
+  humanURL: https://docs.armada.ai/bridge/api
+  baseURL: https://console.armada.ai
+  tags:
+  - Tenants
+  properties:
+  - type: OpenAPI
+    url: openapi/armada-tenants-api-openapi.yml
+  - type: APIReference
+    url: https://docs.armada.ai/bridge/api
+  - type: Documentation
+    url: https://docs.armada.ai/bridge/overview
+- aid: armada:armada-vms-api
+  name: Armada VMs API
+  description: The VMs API from Armada — 11 operation(s) for vms.
+  humanURL: https://docs.armada.ai/bridge/api
+  baseURL: https://console.armada.ai
+  tags:
+  - VMs
+  properties:
+  - type: OpenAPI
+    url: openapi/armada-vms-api-openapi.yml
+  - type: APIReference
+    url: https://docs.armada.ai/bridge/api
+  - type: Documentation
+    url: https://docs.armada.ai/bridge/overview
+- aid: armada:armada-vpc-api
+  name: Armada VPC API
+  description: The VPC API from Armada — 4 operation(s) for vpc.
+  humanURL: https://docs.armada.ai/bridge/api
+  baseURL: https://console.armada.ai
+  tags:
+  - VPC
+  properties:
+  - type: OpenAPI
+    url: openapi/armada-vpc-api-openapi.yml
+  - type: APIReference
+    url: https://docs.armada.ai/bridge/api
+  - type: Documentation
+    url: https://docs.armada.ai/bridge/overview
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
@@ -26,3 +516,46 @@ maintainers:
 common:
 - type: Website
   url: https://armada.ai
+- type: DeveloperPortal
+  url: https://docs.armada.ai
+- type: Documentation
+  url: https://docs.armada.ai/bridge/overview
+- type: APIReference
+  url: https://docs.armada.ai/bridge/api
+- type: GettingStarted
+  url: https://docs.armada.ai/bridge/tenant-guide/login-to-bridge-ui
+- type: Blog
+  url: https://www.armada.ai/resources/blog
+- type: Login
+  url: https://console.armada.ai/
+- type: PrivacyPolicy
+  url: https://www.armada.ai/privacy-policy
+- type: Authentication
+  url: authentication/armada-authentication.yml
+- type: Conventions
+  url: conventions/armada-conventions.yml
+- type: ErrorCatalog
+  url: errors/armada-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/armada-lifecycle.yml
+- type: Conformance
+  url: conformance/armada-conformance.yml
+- type: DataModel
+  url: data-model/armada-data-model.yml
+- type: Overlay
+  url: overlays/armada-orchestrator-overlay.yaml
+- type: MCPServer
+  url: mcp/armada-mcp.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: LLMsTxt
+  url: llms/armada-llms.txt
+- type: DomainSecurity
+  url: security/armada-domain-security.yml
+- type: AgenticAccess
+  url: agentic-access/armada-agentic-access.yml
+x-enrichment:
+  date: '2026-07-19'
+  status: backfilled
+  pass: local-v1
+  note: backfilled from .gitignore signal + verified work evidence

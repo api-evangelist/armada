@@ -1,0 +1,23 @@
+generated: '2026-07-18'
+method: searched
+source: https://docs.armada.ai/bridge/api
+# Versioning / lifecycle posture for the Armada Bridge platform.
+versioning:
+  scheme: path-relative
+  api_current: '1.0.0'
+  docs_current: '5.3.0'
+  docs_versioned: true
+  detail: >-
+    The Orchestrator API declares version 1.0.0. Product documentation is independently
+    versioned; the 5.3.0 line is published alongside the current unversioned docs.
+  docs: https://docs.armada.ai/bridge/overview
+deprecation:
+  policy_url: null
+  sunset_header: false
+  note: No formal deprecation policy or RFC 8594 Sunset/Deprecation header support was found.
+sla:
+  url: null
+  note: No public SLA / uptime target page was found.
+status_page: null
+status_page_note: No public status page found (status.armada.ai does not resolve).
+deprecated_operations: []

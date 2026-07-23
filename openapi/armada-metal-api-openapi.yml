@@ -1,0 +1,236 @@
+openapi: 3.0.3
+info:
+  title: Orchestrator Admin Settings Metal API
+  description: 'API for the GPUaaS Orchestrator microservice. Handles tenants, clusters, VMs,
+
+    storage, networking, catalogs, quotas, and related infrastructure operations.
+
+    '
+  version: 1.0.0
+  contact:
+    name: GPUaaS Platform
+servers:
+- url: /
+  description: Relative base (prefix with deployment base URL)
+security:
+- bearerAuth: []
+tags:
+- name: Metal
+paths:
+  /tenants/{tenant}/metal/allocate:
+    post:
+      tags:
+      - Metal
+      summary: Allocate metal
+      parameters:
+      - name: tenant
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Metal allocated
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '201':
+          $ref: '#/components/responses/Created'
+        '409':
+          $ref: '#/components/responses/Conflict'
+  /tenants/{tenant}/metal/{computeNodeId}/deallocate:
+    post:
+      tags:
+      - Metal
+      summary: Deallocate metal
+      parameters:
+      - name: tenant
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: computeNodeId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Deallocated
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '201':
+          $ref: '#/components/responses/Created'
+        '409':
+          $ref: '#/components/responses/Conflict'
+  /tenants/{tenant}/metal/computes:
+    get:
+      tags:
+      - Metal
+      summary: List computes
+      parameters:
+      - name: tenant
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: List of computes
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /tenants/{tenant}/metal/computes/{computeNodeId}:
+    get:
+      tags:
+      - Metal
+      summary: Get compute by ID
+      parameters:
+      - name: tenant
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: computeNodeId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Compute
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /metal/flavour:
+    get:
+      tags:
+      - Metal
+      summary: Get metal flavours
+      operationId: getMetalFlavours
+      responses:
+        '200':
+          description: List of flavours
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /storages:
+    get:
+      tags:
+      - Metal
+      summary: List all storage nodes
+      operationId: fetchAllStorageNodes
+      responses:
+        '200':
+          description: List of storage nodes
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /storages/{storageNodeId}:
+    get:
+      tags:
+      - Metal
+      summary: Get storage node by ID
+      parameters:
+      - name: storageNodeId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Storage node
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /osimages:
+    get:
+      tags:
+      - Metal
+      summary: Get OS images
+      operationId: getOsImages
+      responses:
+        '200':
+          description: List of OS images
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+components:
+  responses:
+    InternalServerError:
+      description: Internal Server Error - server error
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication
+    BadRequest:
+      description: Bad Request - invalid or malformed request
+    Conflict:
+      description: Conflict - resource conflict (e.g. duplicate)
+    NotFound:
+      description: Not Found - resource does not exist
+    Forbidden:
+      description: Forbidden - insufficient permissions
+    Created:
+      description: Created - resource created successfully
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: JWT from auth middleware

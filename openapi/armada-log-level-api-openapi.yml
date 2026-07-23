@@ -1,0 +1,128 @@
+openapi: 3.0.3
+info:
+  title: Orchestrator Admin Settings Log Level API
+  description: 'API for the GPUaaS Orchestrator microservice. Handles tenants, clusters, VMs,
+
+    storage, networking, catalogs, quotas, and related infrastructure operations.
+
+    '
+  version: 1.0.0
+  contact:
+    name: GPUaaS Platform
+servers:
+- url: /
+  description: Relative base (prefix with deployment base URL)
+security:
+- bearerAuth: []
+tags:
+- name: Log Level
+paths:
+  /log-level:
+    get:
+      tags:
+      - Log Level
+      summary: Get current log level
+      operationId: getLogLevel
+      responses:
+        '200':
+          description: Current log level
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    post:
+      tags:
+      - Log Level
+      summary: Set log level
+      operationId: setLogLevel
+      responses:
+        '200':
+          description: Log level updated
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '201':
+          $ref: '#/components/responses/Created'
+        '409':
+          $ref: '#/components/responses/Conflict'
+  /log-level/debug:
+    post:
+      tags:
+      - Log Level
+      summary: Enable debug logging
+      operationId: enableDebug
+      responses:
+        '200':
+          description: Debug enabled
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '201':
+          $ref: '#/components/responses/Created'
+        '409':
+          $ref: '#/components/responses/Conflict'
+  /log-level/info:
+    post:
+      tags:
+      - Log Level
+      summary: Disable debug (set to info)
+      operationId: disableDebug
+      responses:
+        '200':
+          description: Debug disabled
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '201':
+          $ref: '#/components/responses/Created'
+        '409':
+          $ref: '#/components/responses/Conflict'
+components:
+  responses:
+    InternalServerError:
+      description: Internal Server Error - server error
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication
+    BadRequest:
+      description: Bad Request - invalid or malformed request
+    Conflict:
+      description: Conflict - resource conflict (e.g. duplicate)
+    NotFound:
+      description: Not Found - resource does not exist
+    Forbidden:
+      description: Forbidden - insufficient permissions
+    Created:
+      description: Created - resource created successfully
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: JWT from auth middleware

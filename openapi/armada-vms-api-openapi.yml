@@ -1,0 +1,379 @@
+openapi: 3.0.3
+info:
+  title: Orchestrator Admin Settings VMs API
+  description: 'API for the GPUaaS Orchestrator microservice. Handles tenants, clusters, VMs,
+
+    storage, networking, catalogs, quotas, and related infrastructure operations.
+
+    '
+  version: 1.0.0
+  contact:
+    name: GPUaaS Platform
+servers:
+- url: /
+  description: Relative base (prefix with deployment base URL)
+security:
+- bearerAuth: []
+tags:
+- name: VMs
+paths:
+  /tenants/{tenant}/vms:
+    get:
+      tags:
+      - VMs
+      summary: Get all VMs for tenant
+      parameters:
+      - name: tenant
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: List of VMs
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    post:
+      tags:
+      - VMs
+      summary: Allocate VM
+      parameters:
+      - name: tenant
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: VM allocated
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '201':
+          $ref: '#/components/responses/Created'
+        '409':
+          $ref: '#/components/responses/Conflict'
+  /tenants/{tenant}/vms/{vmId}:
+    get:
+      tags:
+      - VMs
+      summary: Get VM
+      parameters:
+      - name: tenant
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: vmId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: VM
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+    delete:
+      tags:
+      - VMs
+      summary: Deallocate VM
+      parameters:
+      - name: tenant
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: vmId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Deallocated
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '204':
+          $ref: '#/components/responses/NoContent'
+  /vms:
+    get:
+      tags:
+      - VMs
+      summary: Get VM info
+      operationId: getVMInfo
+      responses:
+        '200':
+          description: VM info
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /vms/flavour:
+    get:
+      tags:
+      - VMs
+      summary: Get VM flavours
+      operationId: getVMFlavours
+      responses:
+        '200':
+          description: List of flavours
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /tenants/{tenant}/vms/flavours:
+    get:
+      tags:
+      - VMs
+      summary: Get VM flavours by tenant
+      parameters:
+      - name: tenant
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: List of flavours
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /tenants/{tenant}/vms/flavours/{flavourId}:
+    delete:
+      tags:
+      - VMs
+      summary: Delete flavour price by ID
+      parameters:
+      - name: tenant
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: flavourId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Deleted
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '204':
+          $ref: '#/components/responses/NoContent'
+  /vms/flavour/{flavourId}/pricing:
+    post:
+      tags:
+      - VMs
+      summary: Update flavour pricing
+      parameters:
+      - name: flavourId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Pricing updated
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '201':
+          $ref: '#/components/responses/Created'
+        '409':
+          $ref: '#/components/responses/Conflict'
+  /tenants/{tenant}/vms/{vmId}/power/{action}:
+    post:
+      tags:
+      - VMs
+      summary: Execute VM power action
+      parameters:
+      - name: tenant
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: vmId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: action
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Action executed
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '201':
+          $ref: '#/components/responses/Created'
+        '409':
+          $ref: '#/components/responses/Conflict'
+  /tenants/{tenant}/vms/{vmId}/logs:
+    get:
+      tags:
+      - VMs
+      summary: Get VM logs
+      parameters:
+      - name: tenant
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: vmId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: VM logs
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /vms/osimages:
+    get:
+      tags:
+      - VMs
+      summary: Get OS images for VMs
+      operationId: getVMOSImages
+      responses:
+        '200':
+          description: List of OS images
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /vms/vgpu-flavours:
+    get:
+      tags:
+      - VMs
+      summary: Get vGPU flavours
+      operationId: getVGPUFlavours
+      responses:
+        '200':
+          description: List of vGPU flavours
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+components:
+  responses:
+    NoContent:
+      description: No Content - success with no response body
+    InternalServerError:
+      description: Internal Server Error - server error
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication
+    BadRequest:
+      description: Bad Request - invalid or malformed request
+    Conflict:
+      description: Conflict - resource conflict (e.g. duplicate)
+    NotFound:
+      description: Not Found - resource does not exist
+    Forbidden:
+      description: Forbidden - insufficient permissions
+    Created:
+      description: Created - resource created successfully
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: JWT from auth middleware

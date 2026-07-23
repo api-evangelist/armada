@@ -1,0 +1,81 @@
+generated: '2026-07-18'
+method: derived
+source: openapi/armada-orchestrator-openapi-original.yml
+# The Orchestrator spec inlines request/response bodies (components.schemas is
+# empty), so a full $ref entity graph cannot be derived. This is the resource
+# inventory derived from the tag taxonomy and path roots, with the natural
+# tenant-scoped containment relationships the GPUaaS domain implies.
+note: >-
+  Entities and relationships are derived from tags + path structure, not from named
+  component schemas. Treat relationships as the platform's resource hierarchy, not
+  verbatim spec $refs.
+entities:
+  - name: Tenant
+    path_root: /tenants
+    domain: multi-tenancy
+  - name: Cluster
+    path_root: /clusters
+    domain: compute
+  - name: VM
+    path_root: /vms
+    domain: compute
+  - name: MetalServer
+    path_root: /metal
+    domain: compute
+  - name: Storage
+    path_root: /storages
+    domain: storage
+  - name: Dataset
+    path_root: /datasets
+    domain: storage
+  - name: DataVolume
+    path_root: /data-volumes
+    domain: storage
+  - name: Network
+    path_root: /network
+    domain: networking
+  - name: VPC
+    path_root: /vpc
+    domain: networking
+  - name: SecurityGroup
+    path_root: /security-groups
+    domain: networking
+  - name: LoadBalancer
+    path_root: /load-balancers
+    domain: networking
+  - name: Quota
+    path_root: /defaultquotas
+    domain: governance
+  - name: Catalog
+    path_root: /catalog
+    domain: catalog
+  - name: Model
+    path_root: /models
+    domain: ai-studio
+  - name: Endpoint
+    path_root: /endpoints
+    domain: ai-studio
+  - name: SlurmCluster
+    path_root: /slurm
+    domain: hpc
+relationships:
+  - from: Tenant
+    to: Cluster
+    type: has_many
+    via: tenant-scope
+  - from: Tenant
+    to: VM
+    type: has_many
+    via: tenant-scope
+  - from: Tenant
+    to: Quota
+    type: has_one
+    via: tenant-scope
+  - from: Tenant
+    to: Storage
+    type: has_many
+    via: tenant-scope
+  - from: Cluster
+    to: Endpoint
+    type: has_many
+    via: cluster-scope
