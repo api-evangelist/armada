@@ -1,0 +1,117 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Orchestrator Admin Settings Catalog API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Catalog",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get catalog",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/catalog"
+          },
+          "docs": "Get catalog"
+        },
+        {
+          "info": {
+            "name": "Get catalog by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/catalog/:catalogID",
+            "params": [
+              {
+                "name": "catalogID",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get catalog by ID"
+        },
+        {
+          "info": {
+            "name": "Update product type pricing",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/catalog/:catalogID/product-types/:productTypeID/pricing",
+            "params": [
+              {
+                "name": "catalogID",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "productTypeID",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Update product type pricing"
+        },
+        {
+          "info": {
+            "name": "Get tenant catalog",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/tenants/:tenant/catalog",
+            "params": [
+              {
+                "name": "tenant",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get tenant catalog"
+        },
+        {
+          "info": {
+            "name": "Delete catalog tenant price",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "/tenants/:tenant/product-types/:productTypeID",
+            "params": [
+              {
+                "name": "tenant",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "productTypeID",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete catalog tenant price"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

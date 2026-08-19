@@ -1,0 +1,126 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Orchestrator Admin Settings Data Volumes API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Data Volumes",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List data volumes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/tenants/:tenant/clusters/:clusterID/volumes",
+            "params": [
+              {
+                "name": "tenant",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "clusterID",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "List data volumes"
+        },
+        {
+          "info": {
+            "name": "Create data volume",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/tenants/:tenant/clusters/:clusterID/volumes",
+            "params": [
+              {
+                "name": "tenant",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "clusterID",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Create data volume"
+        },
+        {
+          "info": {
+            "name": "Get data volume",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/tenants/:tenant/clusters/:clusterID/volumes/:id",
+            "params": [
+              {
+                "name": "tenant",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "clusterID",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get data volume"
+        },
+        {
+          "info": {
+            "name": "Delete data volume",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "/tenants/:tenant/clusters/:clusterID/volumes/:id",
+            "params": [
+              {
+                "name": "tenant",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "clusterID",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete data volume"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

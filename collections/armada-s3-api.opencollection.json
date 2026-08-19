@@ -1,0 +1,221 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Orchestrator Admin Settings S3 API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "S3",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List S3 buckets",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/tenants/:tenant/s3/buckets",
+            "params": [
+              {
+                "name": "tenant",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "List S3 buckets"
+        },
+        {
+          "info": {
+            "name": "Create S3 bucket",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/tenants/:tenant/s3/buckets",
+            "params": [
+              {
+                "name": "tenant",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Create S3 bucket"
+        },
+        {
+          "info": {
+            "name": "Get S3 bucket",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/tenants/:tenant/s3/buckets/:bucketName",
+            "params": [
+              {
+                "name": "tenant",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "bucketName",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get S3 bucket"
+        },
+        {
+          "info": {
+            "name": "Delete S3 bucket",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "/tenants/:tenant/s3/buckets/:bucketName",
+            "params": [
+              {
+                "name": "tenant",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "bucketName",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete S3 bucket"
+        },
+        {
+          "info": {
+            "name": "List files in bucket",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/tenants/:tenant/s3/buckets/:bucketName/files",
+            "params": [
+              {
+                "name": "tenant",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "bucketName",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "List files in bucket"
+        },
+        {
+          "info": {
+            "name": "Upload file to bucket",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/tenants/:tenant/s3/buckets/:bucketName/files",
+            "params": [
+              {
+                "name": "tenant",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "bucketName",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Upload file to bucket"
+        },
+        {
+          "info": {
+            "name": "Delete file(s) from bucket",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "/tenants/:tenant/s3/buckets/:bucketName/files",
+            "params": [
+              {
+                "name": "tenant",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "bucketName",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete file(s) from bucket"
+        },
+        {
+          "info": {
+            "name": "Download file from bucket",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/tenants/:tenant/s3/buckets/:bucketName/file",
+            "params": [
+              {
+                "name": "tenant",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "bucketName",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Download file from bucket"
+        },
+        {
+          "info": {
+            "name": "Get upload status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/tenants/:tenant/s3/upload/status/:task_id",
+            "params": [
+              {
+                "name": "tenant",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "task_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get upload status"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

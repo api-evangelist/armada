@@ -1,0 +1,416 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Orchestrator Admin Settings Clusters API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Clusters",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List clusters",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/tenants/:tenant/clusters",
+            "params": [
+              {
+                "name": "tenant",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "List clusters"
+        },
+        {
+          "info": {
+            "name": "Create cluster",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/tenants/:tenant/clusters",
+            "params": [
+              {
+                "name": "tenant",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Create cluster"
+        },
+        {
+          "info": {
+            "name": "Onboard external cluster",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/tenants/:tenant/clusters/external",
+            "params": [
+              {
+                "name": "tenant",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Onboard external cluster"
+        },
+        {
+          "info": {
+            "name": "Get cluster",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/tenants/:tenant/clusters/:clusterID",
+            "params": [
+              {
+                "name": "tenant",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "clusterID",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get cluster"
+        },
+        {
+          "info": {
+            "name": "Scale cluster",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "/tenants/:tenant/clusters/:clusterID",
+            "params": [
+              {
+                "name": "tenant",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "clusterID",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Scale cluster"
+        },
+        {
+          "info": {
+            "name": "Update cluster",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "/tenants/:tenant/clusters/:clusterID",
+            "params": [
+              {
+                "name": "tenant",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "clusterID",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Update cluster"
+        },
+        {
+          "info": {
+            "name": "Delete cluster",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "/tenants/:tenant/clusters/:clusterID",
+            "params": [
+              {
+                "name": "tenant",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "clusterID",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete cluster"
+        },
+        {
+          "info": {
+            "name": "Get cluster kubeconfig",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/tenants/:tenant/clusters/:clusterID/kubeconfig",
+            "params": [
+              {
+                "name": "tenant",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "clusterID",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get cluster kubeconfig"
+        },
+        {
+          "info": {
+            "name": "Get workloads",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/tenants/:tenant/clusters/:clusterID/workloads",
+            "params": [
+              {
+                "name": "tenant",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "clusterID",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get workloads"
+        },
+        {
+          "info": {
+            "name": "Add workloads",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/tenants/:tenant/clusters/:clusterID/workloads",
+            "params": [
+              {
+                "name": "tenant",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "clusterID",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Add workloads"
+        },
+        {
+          "info": {
+            "name": "Delete workloads",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "/tenants/:tenant/clusters/:clusterID/workloads",
+            "params": [
+              {
+                "name": "tenant",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "clusterID",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete workloads"
+        },
+        {
+          "info": {
+            "name": "Upgrade cluster",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/tenants/:tenant/clusters/:clusterID/upgrade",
+            "params": [
+              {
+                "name": "tenant",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "clusterID",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Upgrade cluster"
+        },
+        {
+          "info": {
+            "name": "Get MIG status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/tenants/:tenant/clusters/:clusterID/migs",
+            "params": [
+              {
+                "name": "tenant",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "clusterID",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get MIG status"
+        },
+        {
+          "info": {
+            "name": "Enable MIG",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/tenants/:tenant/clusters/:clusterID/migs",
+            "params": [
+              {
+                "name": "tenant",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "clusterID",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Enable MIG"
+        },
+        {
+          "info": {
+            "name": "Get cluster MIG capacity",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/tenants/:tenant/clusters/:clusterID/migs/capacity",
+            "params": [
+              {
+                "name": "tenant",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "clusterID",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get cluster MIG capacity"
+        },
+        {
+          "info": {
+            "name": "Deploy CSI driver",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/tenants/:tenant/clusters/:clusterID/csi-drivers",
+            "params": [
+              {
+                "name": "tenant",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "clusterID",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Deploy CSI driver"
+        },
+        {
+          "info": {
+            "name": "Delete CSI driver",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "/tenants/:tenant/clusters/:clusterID/csi-drivers/:csiID",
+            "params": [
+              {
+                "name": "tenant",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "clusterID",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "csiID",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete CSI driver"
+        },
+        {
+          "info": {
+            "name": "Get cluster versions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/clusters/versions"
+          },
+          "docs": "Get cluster versions"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

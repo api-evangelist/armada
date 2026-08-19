@@ -1,0 +1,82 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Orchestrator Admin Settings Monetize API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Monetize",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get monetize info",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/monetize"
+          },
+          "docs": "Get monetize info"
+        },
+        {
+          "info": {
+            "name": "Create monetize account user",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/monetize/tenants/:tenantId/users",
+            "params": [
+              {
+                "name": "tenantId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Create monetize account user"
+        },
+        {
+          "info": {
+            "name": "Delete monetize account user",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "/monetize/tenants/:tenantId/users",
+            "params": [
+              {
+                "name": "tenantId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete monetize account user"
+        },
+        {
+          "info": {
+            "name": "Get supported countries",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/monetize/countries"
+          },
+          "docs": "Get supported countries"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

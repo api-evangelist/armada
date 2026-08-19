@@ -1,0 +1,82 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Orchestrator Admin Settings Tenants API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Tenants",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List tenants",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/tenants"
+          },
+          "docs": "List tenants"
+        },
+        {
+          "info": {
+            "name": "Create tenant",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/tenants"
+          },
+          "docs": "Create tenant"
+        },
+        {
+          "info": {
+            "name": "Get tenant",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/tenants/:tenant",
+            "params": [
+              {
+                "name": "tenant",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get tenant"
+        },
+        {
+          "info": {
+            "name": "Delete tenant",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "/tenants/:tenant",
+            "params": [
+              {
+                "name": "tenant",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete tenant"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

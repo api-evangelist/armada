@@ -1,0 +1,260 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Orchestrator Admin Settings VMs API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "VMs",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get all VMs for tenant",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/tenants/:tenant/vms",
+            "params": [
+              {
+                "name": "tenant",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get all VMs for tenant"
+        },
+        {
+          "info": {
+            "name": "Allocate VM",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/tenants/:tenant/vms",
+            "params": [
+              {
+                "name": "tenant",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Allocate VM"
+        },
+        {
+          "info": {
+            "name": "Get VM",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/tenants/:tenant/vms/:vmId",
+            "params": [
+              {
+                "name": "tenant",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "vmId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get VM"
+        },
+        {
+          "info": {
+            "name": "Deallocate VM",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "/tenants/:tenant/vms/:vmId",
+            "params": [
+              {
+                "name": "tenant",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "vmId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Deallocate VM"
+        },
+        {
+          "info": {
+            "name": "Get VM info",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/vms"
+          },
+          "docs": "Get VM info"
+        },
+        {
+          "info": {
+            "name": "Get VM flavours",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/vms/flavour"
+          },
+          "docs": "Get VM flavours"
+        },
+        {
+          "info": {
+            "name": "Get VM flavours by tenant",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/tenants/:tenant/vms/flavours",
+            "params": [
+              {
+                "name": "tenant",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get VM flavours by tenant"
+        },
+        {
+          "info": {
+            "name": "Delete flavour price by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "/tenants/:tenant/vms/flavours/:flavourId",
+            "params": [
+              {
+                "name": "tenant",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "flavourId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete flavour price by ID"
+        },
+        {
+          "info": {
+            "name": "Update flavour pricing",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/vms/flavour/:flavourId/pricing",
+            "params": [
+              {
+                "name": "flavourId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Update flavour pricing"
+        },
+        {
+          "info": {
+            "name": "Execute VM power action",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/tenants/:tenant/vms/:vmId/power/:action",
+            "params": [
+              {
+                "name": "tenant",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "vmId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "action",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Execute VM power action"
+        },
+        {
+          "info": {
+            "name": "Get VM logs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/tenants/:tenant/vms/:vmId/logs",
+            "params": [
+              {
+                "name": "tenant",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "vmId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get VM logs"
+        },
+        {
+          "info": {
+            "name": "Get OS images for VMs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/vms/osimages"
+          },
+          "docs": "Get OS images for VMs"
+        },
+        {
+          "info": {
+            "name": "Get vGPU flavours",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/vms/vgpu-flavours"
+          },
+          "docs": "Get vGPU flavours"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

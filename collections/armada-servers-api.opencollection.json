@@ -1,0 +1,53 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Orchestrator Admin Settings Servers API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Servers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all servers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/servers"
+          },
+          "docs": "List all servers"
+        },
+        {
+          "info": {
+            "name": "Get server by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/servers/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get server by ID"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

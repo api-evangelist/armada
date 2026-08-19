@@ -1,0 +1,53 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Orchestrator Admin Settings Tenant Common Storage API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Tenant Common Storage",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List storage nodes (common/tenant context)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/tenants/common/storages"
+          },
+          "docs": "List storage nodes (common/tenant context)"
+        },
+        {
+          "info": {
+            "name": "Get storage node by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/tenants/common/storages/:storageNodeId",
+            "params": [
+              {
+                "name": "storageNodeId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get storage node by ID"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

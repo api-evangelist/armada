@@ -1,0 +1,124 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Orchestrator Admin Settings Endpoints API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Endpoints",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List endpoints",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/tenants/:tenant/endpoints",
+            "params": [
+              {
+                "name": "tenant",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "List endpoints"
+        },
+        {
+          "info": {
+            "name": "Create endpoint",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/tenants/:tenant/endpoints",
+            "params": [
+              {
+                "name": "tenant",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Create endpoint"
+        },
+        {
+          "info": {
+            "name": "Get endpoint",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/tenants/:tenant/endpoints/:endpointID",
+            "params": [
+              {
+                "name": "tenant",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "endpointID",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get endpoint"
+        },
+        {
+          "info": {
+            "name": "Delete endpoint",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "/tenants/:tenant/endpoints/:endpointID",
+            "params": [
+              {
+                "name": "tenant",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "endpointID",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete endpoint"
+        },
+        {
+          "info": {
+            "name": "Get JupyterHub endpoints",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/tenants/:tenant/jupyterhub/endpoints",
+            "params": [
+              {
+                "name": "tenant",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get JupyterHub endpoints"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

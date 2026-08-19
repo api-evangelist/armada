@@ -1,0 +1,124 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Orchestrator Admin Settings CMS API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "CMS",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "CMS - List VMs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/cms/api/v1/tenants/:tenantID/vms",
+            "params": [
+              {
+                "name": "tenantID",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "CMS - List VMs"
+        },
+        {
+          "info": {
+            "name": "CMS - Allocate VM",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/cms/api/v1/tenants/:tenantID/vms",
+            "params": [
+              {
+                "name": "tenantID",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "CMS - Allocate VM"
+        },
+        {
+          "info": {
+            "name": "CMS - Get VM",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/cms/api/v1/tenants/:tenantID/vms/:vmId",
+            "params": [
+              {
+                "name": "tenantID",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "vmId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "CMS - Get VM"
+        },
+        {
+          "info": {
+            "name": "CMS - Deallocate VM",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "/cms/api/v1/tenants/:tenantID/vms/:vmId",
+            "params": [
+              {
+                "name": "tenantID",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "vmId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "CMS - Deallocate VM"
+        },
+        {
+          "info": {
+            "name": "CMS - Get VM flavours",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/cms/api/v1/tenants/:tenantID/flavour",
+            "params": [
+              {
+                "name": "tenantID",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "CMS - Get VM flavours"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,137 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Orchestrator Admin Settings Infra Import API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Infra Import",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get all import infra",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/infra/import"
+          },
+          "docs": "Get all import infra"
+        },
+        {
+          "info": {
+            "name": "Import infra (upload)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/infra/import/upload"
+          },
+          "docs": "Import infra (upload)"
+        },
+        {
+          "info": {
+            "name": "Import infra (upload)",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "/infra/import/upload"
+          },
+          "docs": "Import infra (upload)"
+        },
+        {
+          "info": {
+            "name": "Delete import upload",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "/infra/import/upload"
+          },
+          "docs": "Delete import upload"
+        },
+        {
+          "info": {
+            "name": "Get all compute import infra",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/infra/import/compute"
+          },
+          "docs": "Get all compute import infra"
+        },
+        {
+          "info": {
+            "name": "Delete import compute",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "/infra/import/compute/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete import compute"
+        },
+        {
+          "info": {
+            "name": "Get all storage import infra",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/infra/import/storage"
+          },
+          "docs": "Get all storage import infra"
+        },
+        {
+          "info": {
+            "name": "Delete import storage",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "/infra/import/storage/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete import storage"
+        },
+        {
+          "info": {
+            "name": "Get discovery type",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/discoverytype"
+          },
+          "docs": "Get discovery type"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

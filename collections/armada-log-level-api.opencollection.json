@@ -1,0 +1,68 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Orchestrator Admin Settings Log Level API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Log Level",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get current log level",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/log-level"
+          },
+          "docs": "Get current log level"
+        },
+        {
+          "info": {
+            "name": "Set log level",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/log-level"
+          },
+          "docs": "Set log level"
+        },
+        {
+          "info": {
+            "name": "Enable debug logging",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/log-level/debug"
+          },
+          "docs": "Enable debug logging"
+        },
+        {
+          "info": {
+            "name": "Disable debug (set to info)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/log-level/info"
+          },
+          "docs": "Disable debug (set to info)"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

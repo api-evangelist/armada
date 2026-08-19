@@ -1,0 +1,53 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Orchestrator Admin Settings Health & Debug API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Health & Debug",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Health check",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/health-check"
+          },
+          "docs": "Health check"
+        },
+        {
+          "info": {
+            "name": "pprof debug profiles",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/debug/pprof/:profile",
+            "params": [
+              {
+                "name": "profile",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "pprof debug profiles"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

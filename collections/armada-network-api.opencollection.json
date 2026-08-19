@@ -1,0 +1,191 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Orchestrator Admin Settings Network API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Network",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get underlay",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/network/underlay"
+          },
+          "docs": "Get underlay"
+        },
+        {
+          "info": {
+            "name": "Create underlay",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/network/underlay"
+          },
+          "docs": "Create underlay"
+        },
+        {
+          "info": {
+            "name": "Create tenant underlay",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/tenants/:tenant/network/tenantUnderlay",
+            "params": [
+              {
+                "name": "tenant",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Create tenant underlay"
+        },
+        {
+          "info": {
+            "name": "Get tenant underlay",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/tenants/:tenant/network/underlay/:computeNodeName",
+            "params": [
+              {
+                "name": "tenant",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "computeNodeName",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get tenant underlay"
+        },
+        {
+          "info": {
+            "name": "Delete tenant underlay",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "/tenants/:tenant/network/underlay/:computeNodeName",
+            "params": [
+              {
+                "name": "tenant",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "computeNodeName",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete tenant underlay"
+        },
+        {
+          "info": {
+            "name": "Create tenant overlay",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/tenants/:tenant/network/overlay",
+            "params": [
+              {
+                "name": "tenant",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Create tenant overlay"
+        },
+        {
+          "info": {
+            "name": "Get VRF network status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/tenants/:tenant/network/vrf-network-status",
+            "params": [
+              {
+                "name": "tenant",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get VRF network status"
+        },
+        {
+          "info": {
+            "name": "Get all VRF network status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/network/vrf-networks-status"
+          },
+          "docs": "Get all VRF network status"
+        },
+        {
+          "info": {
+            "name": "Get compute status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/tenants/:tenant/network/compute-status/:computeNodeName",
+            "params": [
+              {
+                "name": "tenant",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "computeNodeName",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get compute status"
+        },
+        {
+          "info": {
+            "name": "Get network config (topologies)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/network/topologies"
+          },
+          "docs": "Get network config (topologies)"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,147 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Orchestrator Admin Settings NetQ API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "NetQ",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List NetQ servers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/netq/servers"
+          },
+          "docs": "List NetQ servers"
+        },
+        {
+          "info": {
+            "name": "Onboard NetQ server",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/netq/servers"
+          },
+          "docs": "Onboard NetQ server"
+        },
+        {
+          "info": {
+            "name": "Get NetQ server by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/netq/servers/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get NetQ server by ID"
+        },
+        {
+          "info": {
+            "name": "Remove NetQ server",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "/netq/servers/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Remove NetQ server"
+        },
+        {
+          "info": {
+            "name": "Subscribe to NetQ notifications",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/netq/servers/:id/notifications/subscribe",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Subscribe to NetQ notifications"
+        },
+        {
+          "info": {
+            "name": "Unsubscribe from NetQ notifications",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/netq/servers/:id/notifications/unsubscribe",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Unsubscribe from NetQ notifications"
+        },
+        {
+          "info": {
+            "name": "Create topology validation",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/netq/validate"
+          },
+          "docs": "Create topology validation"
+        },
+        {
+          "info": {
+            "name": "Get topology validation status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/netq/validate/:jobid",
+            "params": [
+              {
+                "name": "jobid",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get topology validation status"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

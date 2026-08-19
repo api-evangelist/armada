@@ -1,0 +1,299 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Orchestrator Admin Settings Quotas API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Quotas",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get total capacity",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/totalcapacity"
+          },
+          "docs": "Get total capacity"
+        },
+        {
+          "info": {
+            "name": "Get total capacity by resource type",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/totalcapacity/:resourceType",
+            "params": [
+              {
+                "name": "resourceType",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get total capacity by resource type"
+        },
+        {
+          "info": {
+            "name": "Update total capacity",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "/totalcapacity/:resourceType",
+            "params": [
+              {
+                "name": "resourceType",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Update total capacity"
+        },
+        {
+          "info": {
+            "name": "Update total capacity by subtype",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "/totalcapacity/:resourceType/:resourceSubtype",
+            "params": [
+              {
+                "name": "resourceType",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "resourceSubtype",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Update total capacity by subtype"
+        },
+        {
+          "info": {
+            "name": "Get tenant quotas",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/tenants/:tenant/quotas",
+            "params": [
+              {
+                "name": "tenant",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get tenant quotas"
+        },
+        {
+          "info": {
+            "name": "Create tenant quota",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/tenants/:tenant/quotas",
+            "params": [
+              {
+                "name": "tenant",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Create tenant quota"
+        },
+        {
+          "info": {
+            "name": "Update tenant quota",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "/tenants/:tenant/quotas",
+            "params": [
+              {
+                "name": "tenant",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Update tenant quota"
+        },
+        {
+          "info": {
+            "name": "Get tenant quotas by resource type",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/tenants/:tenant/quotas/:resourceType",
+            "params": [
+              {
+                "name": "tenant",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "resourceType",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get tenant quotas by resource type"
+        },
+        {
+          "info": {
+            "name": "Get tenant reservations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/tenants/:tenant/reservations",
+            "params": [
+              {
+                "name": "tenant",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get tenant reservations"
+        },
+        {
+          "info": {
+            "name": "Create reservation",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/tenants/:tenant/reservations",
+            "params": [
+              {
+                "name": "tenant",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Create reservation"
+        },
+        {
+          "info": {
+            "name": "Update reservation",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "/tenants/:tenant/reservations",
+            "params": [
+              {
+                "name": "tenant",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Update reservation"
+        },
+        {
+          "info": {
+            "name": "Get default quotas",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/defaultquotas"
+          },
+          "docs": "Get default quotas"
+        },
+        {
+          "info": {
+            "name": "Create default quotas",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/defaultquotas"
+          },
+          "docs": "Create default quotas"
+        },
+        {
+          "info": {
+            "name": "Update default quotas",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "/defaultquotas"
+          },
+          "docs": "Update default quotas"
+        },
+        {
+          "info": {
+            "name": "Get default quotas by resource type",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/defaultquotas/:resourceType",
+            "params": [
+              {
+                "name": "resourceType",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get default quotas by resource type"
+        },
+        {
+          "info": {
+            "name": "Get default quotas by resource",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/defaultquotas/:resourceType/:resourceSubtype",
+            "params": [
+              {
+                "name": "resourceType",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "resourceSubtype",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get default quotas by resource"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

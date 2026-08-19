@@ -1,0 +1,68 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Orchestrator Admin Settings Device Discovery API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Device Discovery",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get topology",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/device-discovery"
+          },
+          "docs": "Get topology"
+        },
+        {
+          "info": {
+            "name": "Discover topology",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/device-discovery"
+          },
+          "docs": "Discover topology"
+        },
+        {
+          "info": {
+            "name": "Get device discovery status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/device-discovery-status"
+          },
+          "docs": "Get device discovery status"
+        },
+        {
+          "info": {
+            "name": "Get discovery status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/discovery-status"
+          },
+          "docs": "Get discovery status"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

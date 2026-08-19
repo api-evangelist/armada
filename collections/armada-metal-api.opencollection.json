@@ -1,0 +1,157 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Orchestrator Admin Settings Metal API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Metal",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Allocate metal",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/tenants/:tenant/metal/allocate",
+            "params": [
+              {
+                "name": "tenant",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Allocate metal"
+        },
+        {
+          "info": {
+            "name": "Deallocate metal",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/tenants/:tenant/metal/:computeNodeId/deallocate",
+            "params": [
+              {
+                "name": "tenant",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "computeNodeId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Deallocate metal"
+        },
+        {
+          "info": {
+            "name": "List computes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/tenants/:tenant/metal/computes",
+            "params": [
+              {
+                "name": "tenant",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "List computes"
+        },
+        {
+          "info": {
+            "name": "Get compute by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/tenants/:tenant/metal/computes/:computeNodeId",
+            "params": [
+              {
+                "name": "tenant",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "computeNodeId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get compute by ID"
+        },
+        {
+          "info": {
+            "name": "Get metal flavours",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/metal/flavour"
+          },
+          "docs": "Get metal flavours"
+        },
+        {
+          "info": {
+            "name": "List all storage nodes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/storages"
+          },
+          "docs": "List all storage nodes"
+        },
+        {
+          "info": {
+            "name": "Get storage node by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/storages/:storageNodeId",
+            "params": [
+              {
+                "name": "storageNodeId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get storage node by ID"
+        },
+        {
+          "info": {
+            "name": "Get OS images",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/osimages"
+          },
+          "docs": "Get OS images"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

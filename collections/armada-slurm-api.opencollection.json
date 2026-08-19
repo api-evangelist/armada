@@ -1,0 +1,106 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Orchestrator Admin Settings Slurm API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Slurm",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Slurm clusters",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/tenants/:tenant/slurm",
+            "params": [
+              {
+                "name": "tenant",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get Slurm clusters"
+        },
+        {
+          "info": {
+            "name": "Create Slurm cluster",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "/tenants/:tenant/slurm",
+            "params": [
+              {
+                "name": "tenant",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Create Slurm cluster"
+        },
+        {
+          "info": {
+            "name": "Get Slurm cluster",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "/tenants/:tenant/slurm/:slurmID",
+            "params": [
+              {
+                "name": "tenant",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "slurmID",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get Slurm cluster"
+        },
+        {
+          "info": {
+            "name": "Delete Slurm cluster",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "/tenants/:tenant/slurm/:slurmID",
+            "params": [
+              {
+                "name": "tenant",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "slurmID",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete Slurm cluster"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
