@@ -94,6 +94,8 @@ apis:
   humanURL: https://docs.armada.ai/bridge/api
   baseURL: https://console.armada.ai
   tags:
+  - Cluster
+  tags_raw:
   - Clusters
   properties:
   - type: OpenAPI
@@ -177,7 +179,8 @@ apis:
   description: The Endpoints API from Armada — 3 operation(s) for endpoints.
   humanURL: https://docs.armada.ai/bridge/api
   baseURL: https://console.armada.ai
-  tags:
+  tags: []
+  tags_raw:
   - Endpoints
   properties:
   - type: OpenAPI
@@ -234,6 +237,8 @@ apis:
   humanURL: https://docs.armada.ai/bridge/api
   baseURL: https://console.armada.ai
   tags:
+  - Load Balancer
+  tags_raw:
   - Load Balancers
   properties:
   - type: OpenAPI
@@ -332,6 +337,8 @@ apis:
   humanURL: https://docs.armada.ai/bridge/api
   baseURL: https://console.armada.ai
   tags:
+  - Platform-as-a-Service
+  tags_raw:
   - PaaS
   properties:
   - type: OpenAPI
