@@ -533,6 +533,9 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: CapabilityMap
+  url: capabilities/armada-capability-edges.yml
+  name: Armada Business Capability Map
 - type: Website
   url: https://armada.ai
 - type: DeveloperPortal

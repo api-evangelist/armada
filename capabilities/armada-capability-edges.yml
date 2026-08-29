@@ -1,0 +1,171 @@
+slug: armada
+provider: Armada
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 16
+edges:
+- tag: Clusters
+  spec_file: armada-clusters-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.85
+  evidence: POST /tenants/{tenant}/clusters "Create cluster"; "Scale cluster"; "Get cluster kubeconfig";
+    "Upgrade cluster"
+  reason: Operations provision, scale, upgrade and delete compute clusters for tenants — this is cloud/compute
+    infrastructure lifecycle management, i.e. IT Infrastructure Management, not a tenant-commercial or
+    product capability.
+- tag: Load Balancers
+  spec_file: armada-load-balancers-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.85
+  evidence: POST /tenants/{tenant}/load-balancers "Create load balancer"
+  reason: Provisioning and deletion of load balancers is network infrastructure management.
+- tag: Metal
+  spec_file: armada-metal-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.85
+  evidence: POST /tenants/{tenant}/metal/allocate "Allocate metal"; "List all storage nodes"; "Get OS
+    images"
+  reason: Allocation and inventory of bare-metal compute nodes, storage nodes and OS images — physical
+    compute/storage infrastructure provisioning.
+- tag: Network
+  spec_file: armada-network-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.85
+  evidence: POST /network/underlay  createUnderlay  Create underlay; POST /tenants/{tenant}/network/overlay  Create
+    tenant overlay; GET /network/vrf-networks-status
+  reason: Underlay/overlay and VRF network provisioning and status are squarely compute/network infrastructure
+    management within the orchestrator.
+- tag: Tenants
+  spec_file: armada-tenants-api-openapi.yml
+  capability_id: BC-4230.10
+  capability_id_l1: BC-4230
+  capability_name: Tenant Provisioning & Lifecycle
+  confidence: 0.85
+  evidence: GET /tenants getTenants "List tenants"; POST /tenants createTenant "Create tenant"; DELETE
+    /tenants/{tenant} "Delete tenant"
+  reason: Create/list/delete of tenants in a multi-tenant GPUaaS orchestrator is precisely tenant provisioning
+    and lifecycle in the multi-tenant fleet.
+- tag: VMs
+  spec_file: armada-vms-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.85
+  evidence: POST /tenants/{tenant}/vms "Allocate VM"; "Execute VM power action"; "Get VM flavours"; "Get
+    OS images for VMs"
+  reason: Allocation, power control, flavour and OS-image management of virtual machines is compute infrastructure
+    management. The flavour-pricing endpoint is incidental to the dominant compute-provisioning surface.
+- tag: VPC
+  spec_file: armada-vpc-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.85
+  evidence: POST /tenants/{tenant}/vpcs "Add VPC"; POST /tenants/{tenant}/subnets "Create subnet"
+  reason: Virtual private cloud and subnet CRUD is network infrastructure provisioning, squarely IT Infrastructure
+    Management.
+- tag: CMS
+  spec_file: armada-cms-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.8
+  evidence: POST /cms/api/v1/tenants/{tenantID}/vms CMS - Allocate VM; DELETE ... CMS - Deallocate VM;
+    GET .../flavour CMS - Get VM flavours
+  reason: Allocation and deallocation of virtual machines by flavour within a GPU-as-a-Service orchestrator
+    is compute infrastructure provisioning, i.e. IT Infrastructure Management. Tag string 'CMS' is a homograph
+    — the operations are VM lifecycle, not content management.
+- tag: Data Volumes
+  spec_file: armada-data-volumes-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.8
+  evidence: POST /tenants/{tenant}/clusters/{clusterID}/volumes "Create data volume"
+  reason: CRUD over storage volumes attached to compute clusters — storage infrastructure provisioning,
+    so IT Infrastructure Management. Not data governance despite the word 'Data'.
+- tag: Storage
+  spec_file: armada-storage-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.8
+  evidence: POST /tenants/{tenant}/storage  Create storage; POST /tenants/{tenant}/storage/volumes  Create
+    volume; POST /tenants/{tenant}/storage/volume-mounts  Create volume mount
+  reason: Volume and volume-mount lifecycle is unambiguously storage infrastructure provisioning within
+    the GPUaaS orchestrator.
+- tag: Infra Import
+  spec_file: armada-infra-import-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.75
+  evidence: GET /infra/import/compute getAllComputeImportInfra "Get all compute import infra"; "Get all
+    storage import infra"
+  reason: Bulk import and inventory of compute and storage infrastructure records into the orchestrator
+    — infrastructure inventory/onboarding, i.e. IT Infrastructure Management.
+- tag: Tenant Common Storage
+  spec_file: armada-tenant-common-storage-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.75
+  evidence: GET /tenants/common/storages fetchAllStorageNodesCommon "List storage nodes (common/tenant
+    context)"
+  reason: Operations enumerate storage nodes of the cloud platform — compute/storage infrastructure inventory,
+    i.e. IT Infrastructure Management, not a tenant-facing business function.
+- tag: Device Discovery
+  spec_file: armada-device-discovery-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.7
+  evidence: POST /device-discovery discoverTopology "Discover topology"; "Get device discovery status"
+  reason: Discovers physical device/network topology of the estate — infrastructure inventory and topology
+    discovery, an IT infrastructure/operations function.
+- tag: NetQ
+  spec_file: armada-netq-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.7
+  evidence: POST /netq/servers  onboardNetQServer  Onboard NetQ server; POST /netq/validate  createTopologyValidation  Create
+    topology validation
+  reason: Onboarding network-fabric telemetry servers and validating network topology is network infrastructure
+    management for the edge/GPU estate, not a business-domain capability.
+- tag: Slurm
+  spec_file: armada-slurm-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.7
+  evidence: POST /tenants/{tenant}/slurm  Create Slurm cluster; DELETE /tenants/{tenant}/slurm/{slurmID}  Delete
+    Slurm cluster
+  reason: Creating and deleting Slurm HPC scheduler clusters for tenants is provisioning of compute infrastructure,
+    not a business-domain capability.
+- tag: Storage Classes
+  spec_file: armada-storage-classes-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.7
+  evidence: POST /tenants/{tenant}/clusters/{clusterID}/storage-classes  Create storage class
+  reason: Kubernetes-style storage class definitions on tenant clusters are storage infrastructure configuration;
+    no business capability beyond IT infrastructure.
