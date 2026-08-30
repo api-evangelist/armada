@@ -249,7 +249,7 @@ apis:
   humanURL: https://docs.armada.ai/bridge/api
   baseURL: https://console.armada.ai
   tags:
-  - Load Balancer
+  - Load Balancers
   tags_raw:
   - Load Balancers
   properties:
@@ -349,7 +349,7 @@ apis:
   humanURL: https://docs.armada.ai/bridge/api
   baseURL: https://console.armada.ai
   tags:
-  - Platform-as-a-Service
+  - PaaS
   tags_raw:
   - PaaS
   properties:
