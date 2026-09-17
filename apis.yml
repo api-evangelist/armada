@@ -344,22 +344,6 @@ apis:
     url: https://docs.armada.ai/bridge/api
   - type: Documentation
     url: https://docs.armada.ai/bridge/overview
-- aid: armada:armada-paas-api
-  name: Armada PaaS API
-  description: The PaaS API from Armada — 3 operation(s) for paas.
-  humanURL: https://docs.armada.ai/bridge/api
-  baseURL: https://console.armada.ai
-  tags:
-  - Platform-as-a-Service
-  tags_raw:
-  - PaaS
-  properties:
-  - type: OpenAPI
-    url: openapi/armada-paas-api-openapi.yml
-  - type: APIReference
-    url: https://docs.armada.ai/bridge/api
-  - type: Documentation
-    url: https://docs.armada.ai/bridge/overview
 - aid: armada:armada-quotas-api
   name: Armada Quotas API
   description: The Quotas API from Armada — 9 operation(s) for quotas.
@@ -500,8 +484,22 @@ apis:
     url: https://docs.armada.ai/bridge/api
   - type: Documentation
     url: https://docs.armada.ai/bridge/overview
+- aid: armada:armada-vpc-api
+  name: Armada VPC API
+  description: The VPC API from Armada — 4 operation(s) for vpc.
+  humanURL: https://docs.armada.ai/bridge/api
+  baseURL: https://console.armada.ai
+  tags:
+  - VPC
+  properties:
+  - type: OpenAPI
+    url: openapi/armada-vpc-api-openapi.yml
+  - type: APIReference
+    url: https://docs.armada.ai/bridge/api
+  - type: Documentation
+    url: https://docs.armada.ai/bridge/overview
 - aid: armada:armada-vms-api
-  name: Armada VMs API
+  name: Armada V Ms API
   description: The VMs API from Armada — 11 operation(s) for vms.
   humanURL: https://docs.armada.ai/bridge/api
   baseURL: https://console.armada.ai
@@ -514,16 +512,16 @@ apis:
     url: https://docs.armada.ai/bridge/api
   - type: Documentation
     url: https://docs.armada.ai/bridge/overview
-- aid: armada:armada-vpc-api
-  name: Armada VPC API
-  description: The VPC API from Armada — 4 operation(s) for vpc.
+- aid: armada:armada-paa-s-api
+  name: Armada Paa S API
+  description: The Paa S API from Armada — 3 operation(s) for paa s.
   humanURL: https://docs.armada.ai/bridge/api
   baseURL: https://console.armada.ai
   tags:
-  - VPC
+  - Paa S
   properties:
   - type: OpenAPI
-    url: openapi/armada-vpc-api-openapi.yml
+    url: openapi/armada-paa-s-api-openapi.yml
   - type: APIReference
     url: https://docs.armada.ai/bridge/api
   - type: Documentation
