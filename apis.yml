@@ -137,6 +137,8 @@ apis:
   humanURL: https://docs.armada.ai/bridge/api
   baseURL: https://console.armada.ai
   tags:
+  - Dashboards
+  tags_raw:
   - Dashboard
   properties:
   - type: OpenAPI
@@ -280,6 +282,8 @@ apis:
   humanURL: https://docs.armada.ai/bridge/api
   baseURL: https://console.armada.ai
   tags:
+  - Metals
+  tags_raw:
   - Metal
   properties:
   - type: OpenAPI
@@ -336,6 +340,8 @@ apis:
   humanURL: https://docs.armada.ai/bridge/api
   baseURL: https://console.armada.ai
   tags:
+  - Networks
+  tags_raw:
   - Network
   properties:
   - type: OpenAPI
@@ -518,6 +524,8 @@ apis:
   humanURL: https://docs.armada.ai/bridge/api
   baseURL: https://console.armada.ai
   tags:
+  - Platform-as-a-Service
+  tags_raw:
   - Paa S
   properties:
   - type: OpenAPI
