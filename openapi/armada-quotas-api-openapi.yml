@@ -1,11 +1,9 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Orchestrator Admin Settings Quotas API
+  title: Orchestrator Quotas API
   description: 'API for the GPUaaS Orchestrator microservice. Handles tenants, clusters, VMs,
 
-    storage, networking, catalogs, quotas, and related infrastructure operations.
-
-    '
+    storage, networking, catalogs, quotas, and related infrastructure operations.'
   version: 1.0.0
   contact:
     name: GPUaaS Platform
@@ -60,6 +58,8 @@ paths:
           $ref: '#/components/responses/NotFound'
         '500':
           $ref: '#/components/responses/InternalServerError'
+      operationId: getTotalcapacityByResourceType
+      x-operation-id-source: derived
     patch:
       tags:
       - Quotas
@@ -83,6 +83,8 @@ paths:
           $ref: '#/components/responses/NotFound'
         '500':
           $ref: '#/components/responses/InternalServerError'
+      operationId: patchTotalcapacityByResourceType
+      x-operation-id-source: derived
   /totalcapacity/{resourceType}/{resourceSubtype}:
     patch:
       tags:
@@ -112,6 +114,8 @@ paths:
           $ref: '#/components/responses/NotFound'
         '500':
           $ref: '#/components/responses/InternalServerError'
+      operationId: patchTotalcapacityByResourceTypeByResourceSubtype
+      x-operation-id-source: derived
   /tenants/{tenant}/quotas:
     get:
       tags:
@@ -136,6 +140,8 @@ paths:
           $ref: '#/components/responses/NotFound'
         '500':
           $ref: '#/components/responses/InternalServerError'
+      operationId: getTenantsByTenantQuotas
+      x-operation-id-source: derived
     post:
       tags:
       - Quotas
@@ -163,6 +169,8 @@ paths:
           $ref: '#/components/responses/Created'
         '409':
           $ref: '#/components/responses/Conflict'
+      operationId: postTenantsByTenantQuotas
+      x-operation-id-source: derived
     patch:
       tags:
       - Quotas
@@ -186,6 +194,8 @@ paths:
           $ref: '#/components/responses/NotFound'
         '500':
           $ref: '#/components/responses/InternalServerError'
+      operationId: patchTenantsByTenantQuotas
+      x-operation-id-source: derived
   /tenants/{tenant}/quotas/{resourceType}:
     get:
       tags:
@@ -215,6 +225,8 @@ paths:
           $ref: '#/components/responses/NotFound'
         '500':
           $ref: '#/components/responses/InternalServerError'
+      operationId: getTenantsByTenantQuotasByResourceType
+      x-operation-id-source: derived
   /tenants/{tenant}/reservations:
     get:
       tags:
@@ -239,6 +251,8 @@ paths:
           $ref: '#/components/responses/NotFound'
         '500':
           $ref: '#/components/responses/InternalServerError'
+      operationId: getTenantsByTenantReservations
+      x-operation-id-source: derived
     post:
       tags:
       - Quotas
@@ -266,6 +280,8 @@ paths:
           $ref: '#/components/responses/Created'
         '409':
           $ref: '#/components/responses/Conflict'
+      operationId: postTenantsByTenantReservations
+      x-operation-id-source: derived
     patch:
       tags:
       - Quotas
@@ -289,6 +305,8 @@ paths:
           $ref: '#/components/responses/NotFound'
         '500':
           $ref: '#/components/responses/InternalServerError'
+      operationId: patchTenantsByTenantReservations
+      x-operation-id-source: derived
   /defaultquotas:
     get:
       tags:
@@ -372,6 +390,8 @@ paths:
           $ref: '#/components/responses/NotFound'
         '500':
           $ref: '#/components/responses/InternalServerError'
+      operationId: getDefaultquotasByResourceType
+      x-operation-id-source: derived
   /defaultquotas/{resourceType}/{resourceSubtype}:
     get:
       tags:
@@ -401,22 +421,24 @@ paths:
           $ref: '#/components/responses/NotFound'
         '500':
           $ref: '#/components/responses/InternalServerError'
+      operationId: getDefaultquotasByResourceTypeByResourceSubtype
+      x-operation-id-source: derived
 components:
   responses:
-    InternalServerError:
-      description: Internal Server Error - server error
     Unauthorized:
       description: Unauthorized - missing or invalid authentication
-    BadRequest:
-      description: Bad Request - invalid or malformed request
+    InternalServerError:
+      description: Internal Server Error - server error
     Conflict:
       description: Conflict - resource conflict (e.g. duplicate)
+    BadRequest:
+      description: Bad Request - invalid or malformed request
+    Created:
+      description: Created - resource created successfully
     NotFound:
       description: Not Found - resource does not exist
     Forbidden:
       description: Forbidden - insufficient permissions
-    Created:
-      description: Created - resource created successfully
   securitySchemes:
     bearerAuth:
       type: http

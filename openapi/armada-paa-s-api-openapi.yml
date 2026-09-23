@@ -1,11 +1,9 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Orchestrator Admin Settings PaaS API
+  title: Orchestrator Paa S API
   description: 'API for the GPUaaS Orchestrator microservice. Handles tenants, clusters, VMs,
 
-    storage, networking, catalogs, quotas, and related infrastructure operations.
-
-    '
+    storage, networking, catalogs, quotas, and related infrastructure operations.'
   version: 1.0.0
   contact:
     name: GPUaaS Platform
@@ -15,12 +13,12 @@ servers:
 security:
 - bearerAuth: []
 tags:
-- name: PaaS
+- name: Paa S
 paths:
   /tenants/{tenant}/paas/initialize:
     post:
       tags:
-      - PaaS
+      - Paa S
       summary: Create/initialize PaaS cluster
       parameters:
       - name: tenant
@@ -45,10 +43,12 @@ paths:
           $ref: '#/components/responses/Created'
         '409':
           $ref: '#/components/responses/Conflict'
+      operationId: postTenantsByTenantPaasInitialize
+      x-operation-id-source: derived
   /tenants/{tenant}/paas:
     get:
       tags:
-      - PaaS
+      - Paa S
       summary: Get PaaS cluster
       parameters:
       - name: tenant
@@ -69,10 +69,12 @@ paths:
           $ref: '#/components/responses/NotFound'
         '500':
           $ref: '#/components/responses/InternalServerError'
+      operationId: getTenantsByTenantPaas
+      x-operation-id-source: derived
   /tenants/{tenant}/paas/teardown:
     delete:
       tags:
-      - PaaS
+      - Paa S
       summary: Teardown/delete PaaS cluster
       parameters:
       - name: tenant
@@ -95,24 +97,26 @@ paths:
           $ref: '#/components/responses/InternalServerError'
         '204':
           $ref: '#/components/responses/NoContent'
+      operationId: deleteTenantsByTenantPaasTeardown
+      x-operation-id-source: derived
 components:
   responses:
-    NoContent:
-      description: No Content - success with no response body
-    InternalServerError:
-      description: Internal Server Error - server error
     Unauthorized:
       description: Unauthorized - missing or invalid authentication
-    BadRequest:
-      description: Bad Request - invalid or malformed request
+    InternalServerError:
+      description: Internal Server Error - server error
+    NoContent:
+      description: No Content - success with no response body
     Conflict:
       description: Conflict - resource conflict (e.g. duplicate)
+    BadRequest:
+      description: Bad Request - invalid or malformed request
+    Created:
+      description: Created - resource created successfully
     NotFound:
       description: Not Found - resource does not exist
     Forbidden:
       description: Forbidden - insufficient permissions
-    Created:
-      description: Created - resource created successfully
   securitySchemes:
     bearerAuth:
       type: http

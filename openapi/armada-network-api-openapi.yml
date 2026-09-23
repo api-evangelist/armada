@@ -1,11 +1,9 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Orchestrator Admin Settings Network API
+  title: Orchestrator Network API
   description: 'API for the GPUaaS Orchestrator microservice. Handles tenants, clusters, VMs,
 
-    storage, networking, catalogs, quotas, and related infrastructure operations.
-
-    '
+    storage, networking, catalogs, quotas, and related infrastructure operations.'
   version: 1.0.0
   contact:
     name: GPUaaS Platform
@@ -86,6 +84,8 @@ paths:
           $ref: '#/components/responses/Created'
         '409':
           $ref: '#/components/responses/Conflict'
+      operationId: postTenantsByTenantNetworkTenantUnderlay
+      x-operation-id-source: derived
   /tenants/{tenant}/network/underlay/{computeNodeName}:
     get:
       tags:
@@ -115,6 +115,8 @@ paths:
           $ref: '#/components/responses/NotFound'
         '500':
           $ref: '#/components/responses/InternalServerError'
+      operationId: getTenantsByTenantNetworkUnderlayByComputeNodeName
+      x-operation-id-source: derived
     delete:
       tags:
       - Network
@@ -145,6 +147,8 @@ paths:
           $ref: '#/components/responses/InternalServerError'
         '204':
           $ref: '#/components/responses/NoContent'
+      operationId: deleteTenantsByTenantNetworkUnderlayByComputeNodeName
+      x-operation-id-source: derived
   /tenants/{tenant}/network/overlay:
     post:
       tags:
@@ -173,6 +177,8 @@ paths:
           $ref: '#/components/responses/Created'
         '409':
           $ref: '#/components/responses/Conflict'
+      operationId: postTenantsByTenantNetworkOverlay
+      x-operation-id-source: derived
   /tenants/{tenant}/network/vrf-network-status:
     get:
       tags:
@@ -197,6 +203,8 @@ paths:
           $ref: '#/components/responses/NotFound'
         '500':
           $ref: '#/components/responses/InternalServerError'
+      operationId: getTenantsByTenantNetworkVrfNetworkStatus
+      x-operation-id-source: derived
   /network/vrf-networks-status:
     get:
       tags:
@@ -245,6 +253,8 @@ paths:
           $ref: '#/components/responses/NotFound'
         '500':
           $ref: '#/components/responses/InternalServerError'
+      operationId: getTenantsByTenantNetworkComputeStatusByComputeNodeName
+      x-operation-id-source: derived
   /network/topologies:
     get:
       tags:
@@ -266,22 +276,22 @@ paths:
           $ref: '#/components/responses/InternalServerError'
 components:
   responses:
-    NoContent:
-      description: No Content - success with no response body
-    InternalServerError:
-      description: Internal Server Error - server error
     Unauthorized:
       description: Unauthorized - missing or invalid authentication
-    BadRequest:
-      description: Bad Request - invalid or malformed request
+    InternalServerError:
+      description: Internal Server Error - server error
+    NoContent:
+      description: No Content - success with no response body
     Conflict:
       description: Conflict - resource conflict (e.g. duplicate)
+    BadRequest:
+      description: Bad Request - invalid or malformed request
+    Created:
+      description: Created - resource created successfully
     NotFound:
       description: Not Found - resource does not exist
     Forbidden:
       description: Forbidden - insufficient permissions
-    Created:
-      description: Created - resource created successfully
   securitySchemes:
     bearerAuth:
       type: http

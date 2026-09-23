@@ -1,11 +1,9 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Orchestrator Admin Settings Metal API
+  title: Orchestrator Metal API
   description: 'API for the GPUaaS Orchestrator microservice. Handles tenants, clusters, VMs,
 
-    storage, networking, catalogs, quotas, and related infrastructure operations.
-
-    '
+    storage, networking, catalogs, quotas, and related infrastructure operations.'
   version: 1.0.0
   contact:
     name: GPUaaS Platform
@@ -45,6 +43,8 @@ paths:
           $ref: '#/components/responses/Created'
         '409':
           $ref: '#/components/responses/Conflict'
+      operationId: postTenantsByTenantMetalAllocate
+      x-operation-id-source: derived
   /tenants/{tenant}/metal/{computeNodeId}/deallocate:
     post:
       tags:
@@ -78,6 +78,8 @@ paths:
           $ref: '#/components/responses/Created'
         '409':
           $ref: '#/components/responses/Conflict'
+      operationId: postTenantsByTenantMetalByComputeNodeIdDeallocate
+      x-operation-id-source: derived
   /tenants/{tenant}/metal/computes:
     get:
       tags:
@@ -102,6 +104,8 @@ paths:
           $ref: '#/components/responses/NotFound'
         '500':
           $ref: '#/components/responses/InternalServerError'
+      operationId: getTenantsByTenantMetalComputes
+      x-operation-id-source: derived
   /tenants/{tenant}/metal/computes/{computeNodeId}:
     get:
       tags:
@@ -131,6 +135,8 @@ paths:
           $ref: '#/components/responses/NotFound'
         '500':
           $ref: '#/components/responses/InternalServerError'
+      operationId: getTenantsByTenantMetalComputesByComputeNodeId
+      x-operation-id-source: derived
   /metal/flavour:
     get:
       tags:
@@ -193,6 +199,8 @@ paths:
           $ref: '#/components/responses/NotFound'
         '500':
           $ref: '#/components/responses/InternalServerError'
+      operationId: getStoragesByStorageNodeId
+      x-operation-id-source: derived
   /osimages:
     get:
       tags:
@@ -214,20 +222,20 @@ paths:
           $ref: '#/components/responses/InternalServerError'
 components:
   responses:
-    InternalServerError:
-      description: Internal Server Error - server error
     Unauthorized:
       description: Unauthorized - missing or invalid authentication
-    BadRequest:
-      description: Bad Request - invalid or malformed request
+    InternalServerError:
+      description: Internal Server Error - server error
     Conflict:
       description: Conflict - resource conflict (e.g. duplicate)
+    BadRequest:
+      description: Bad Request - invalid or malformed request
+    Created:
+      description: Created - resource created successfully
     NotFound:
       description: Not Found - resource does not exist
     Forbidden:
       description: Forbidden - insufficient permissions
-    Created:
-      description: Created - resource created successfully
   securitySchemes:
     bearerAuth:
       type: http
