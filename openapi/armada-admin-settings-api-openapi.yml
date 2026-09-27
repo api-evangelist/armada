@@ -54,16 +54,16 @@ paths:
           $ref: '#/components/responses/InternalServerError'
 components:
   responses:
+    Forbidden:
+      description: Forbidden - insufficient permissions
     Unauthorized:
       description: Unauthorized - missing or invalid authentication
-    InternalServerError:
-      description: Internal Server Error - server error
     BadRequest:
       description: Bad Request - invalid or malformed request
     NotFound:
       description: Not Found - resource does not exist
-    Forbidden:
-      description: Forbidden - insufficient permissions
+    InternalServerError:
+      description: Internal Server Error - server error
   securitySchemes:
     bearerAuth:
       type: http
