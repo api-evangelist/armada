@@ -118,20 +118,20 @@ components:
   responses:
     Forbidden:
       description: Forbidden - insufficient permissions
-    Unauthorized:
-      description: Unauthorized - missing or invalid authentication
-    BadRequest:
-      description: Bad Request - invalid or malformed request
-    Conflict:
-      description: Conflict - resource conflict (e.g. duplicate)
-    Created:
-      description: Created - resource created successfully
-    NoContent:
-      description: No Content - success with no response body
-    NotFound:
-      description: Not Found - resource does not exist
     InternalServerError:
       description: Internal Server Error - server error
+    Created:
+      description: Created - resource created successfully
+    BadRequest:
+      description: Bad Request - invalid or malformed request
+    NotFound:
+      description: Not Found - resource does not exist
+    NoContent:
+      description: No Content - success with no response body
+    Conflict:
+      description: Conflict - resource conflict (e.g. duplicate)
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication
   securitySchemes:
     bearerAuth:
       type: http
