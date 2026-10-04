@@ -59,8 +59,8 @@ tags:
 - Kubernetes
 - Bare Metal
 - IoT
-- Orchestration
 - Sovereign Cloud
+- Container Orchestration
 apis:
 - aid: armada:armada-admin-settings-api
   name: Armada Admin Settings API
@@ -527,6 +527,8 @@ apis:
   humanURL: https://docs.armada.ai/bridge/api
   baseURL: https://console.armada.ai
   tags:
+  - Platform-as-a-Service
+  tags_raw:
   - Paa S
   properties:
   - type: OpenAPI
@@ -590,3 +592,5 @@ x-enrichment:
   status: backfilled
   pass: local-v1
   note: backfilled from .gitignore signal + verified work evidence
+x-tags-removed:
+- Orchestration
