@@ -74,16 +74,16 @@ paths:
       x-operation-id-source: derived
 components:
   responses:
-    InternalServerError:
-      description: Internal Server Error - server error
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication
+    NotFound:
+      description: Not Found - resource does not exist
     Forbidden:
       description: Forbidden - insufficient permissions
     BadRequest:
       description: Bad Request - invalid or malformed request
-    NotFound:
-      description: Not Found - resource does not exist
-    Unauthorized:
-      description: Unauthorized - missing or invalid authentication
+    InternalServerError:
+      description: Internal Server Error - server error
   securitySchemes:
     bearerAuth:
       type: http
