@@ -527,6 +527,8 @@ apis:
   humanURL: https://docs.armada.ai/bridge/api
   baseURL: https://console.armada.ai
   tags:
+  - Platform-as-a-Service
+  tags_raw:
   - Paa S
   properties:
   - type: OpenAPI
